@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Academic Excellence Portal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      colors: {
+        "primary": "#003d7c",
+        "on-primary": "#ffffff",
+        "primary-container": "#0054a6",
+        "on-primary-container": "#afcbff",
+        "inverse-primary": "#a9c7ff",
+        "secondary": "#8a5100",
+        "on-secondary": "#ffffff",
+        "secondary-container": "#fc9910",
+        "on-secondary-container": "#643900",
+        "tertiary": "#1a3f6a",
+        "on-tertiary": "#ffffff",
+        "tertiary-container": "#355683",
+        "on-tertiary-container": "#abccff",
+        "error": "#ba1a1a",
+        "on-error": "#ffffff",
+        "error-container": "#ffdad6",
+        "on-error-container": "#93000a",
+        "surface": "#f8f9ff",
+        "surface-dim": "#cbdbf5",
+        "surface-bright": "#f8f9ff",
+        "surface-container-lowest": "#ffffff",
+        "surface-container-low": "#eff4ff",
+        "surface-container": "#e5eeff",
+        "surface-container-high": "#dce9ff",
+        "surface-container-highest": "#d3e4fe",
+        "on-surface": "#0b1c30",
+        "on-surface-variant": "#424751",
+        "inverse-surface": "#213145",
+        "inverse-on-surface": "#eaf1ff",
+        "outline": "#727783",
+        "outline-variant": "#c2c6d3",
+        "surface-tint": "#185eb0",
+        "background": "#f8f9ff",
+        "on-background": "#0b1c30",
+        "surface-variant": "#d3e4fe",
+        "primary-fixed": "#d6e3ff",
+        "primary-fixed-dim": "#a9c7ff",
+        "on-primary-fixed": "#001b3d",
+        "on-primary-fixed-variant": "#00468c",
+        "secondary-fixed": "#ffdcbd",
+        "secondary-fixed-dim": "#ffb86e",
+        "on-secondary-fixed": "#2c1600",
+        "on-secondary-fixed-variant": "#693c00",
+        "tertiary-fixed": "#d4e3ff",
+        "tertiary-fixed-dim": "#a7c8fc",
+        "on-tertiary-fixed": "#001c3a",
+        "on-tertiary-fixed-variant": "#254874",
+      },
+      borderRadius: {
+        "sm": "0.25rem",
+        "DEFAULT": "0.5rem",
+        "md": "0.75rem",
+        "lg": "1rem",
+        "xl": "1.5rem",
+        "full": "9999px"
+      },
+      spacing: {
+        "xs": "4px", "sm": "8px", "md": "16px", "lg": "24px", "xl": "32px",
+        "gutter": "24px", "margin": "32px", "base": "8px", "max_width": "1440px"
+      },
+      fontFamily: {
+        "lexend": ["Lexend", "sans-serif"]
+      },
+      fontSize: {
+        "headline-xl": ["40px", {lineHeight:"52px",letterSpacing:"-0.02em",fontWeight:"700"}],
+        "headline-lg": ["32px", {lineHeight:"40px",letterSpacing:"-0.01em",fontWeight:"600"}],
+        "headline-md": ["24px", {lineHeight:"32px",fontWeight:"600"}],
+        "headline-sm": ["20px", {lineHeight:"28px",fontWeight:"600"}],
+        "body-lg": ["18px", {lineHeight:"28px",fontWeight:"400"}],
+        "body-md": ["16px", {lineHeight:"24px",fontWeight:"400"}],
+        "body-sm": ["14px", {lineHeight:"20px",fontWeight:"400"}],
+        "label-md": ["14px", {lineHeight:"16px",letterSpacing:"0.05em",fontWeight:"500"}],
+        "label-sm": ["12px", {lineHeight:"14px",letterSpacing:"0.05em",fontWeight:"500"}],
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { font-family: 'Lexend', sans-serif; }
+  body { background-color: #f8f9ff; color: #0b1c30; -webkit-font-smoothing: antialiased; }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .fill-icon { font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  .page { display: none; }
+  .page.active { display: block; }
+  .nav-item.active { background: rgba(0,61,124,0.1); border-left: 4px solid #003d7c; color: #003d7c; font-weight: 700; }
+  .nav-item { border-left: 4px solid transparent; }
+  .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .card-hover:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,61,124,0.1); }
+  .progress-bar { transition: width 0.6s ease; }
+  .option-card { transition: all 0.15s ease; cursor: pointer; }
+  .option-card:hover { border-color: #0054a6; background: rgba(0,84,166,0.04); }
+  .option-card.selected { border-color: #0054a6; background: rgba(0,61,124,0.05); }
+  .option-card.correct { border-color: #1e7e34; background: rgba(30,126,52,0.06); }
+  .option-card.incorrect { border-color: #ba1a1a; background: rgba(186,26,26,0.05); }
+  .star-btn { transition: color 0.15s ease, transform 0.15s ease; }
+  .star-btn:hover { transform: scale(1.2); }
+  .slide-in { animation: slideIn 0.3s ease; }
+  @keyframes slideIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+  .toast { position:fixed; bottom:100px; right:24px; z-index:9999; transform:translateX(200%); transition:transform 0.3s ease; }
+  .toast.show { transform:translateX(0); }
+  .sidebar-link { display:flex; align-items:center; gap:16px; padding:12px 16px; color:#424751; transition:all 0.2s; cursor:pointer; }
+  .sidebar-link:hover { background:#dce9ff; }
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.4); z-index:100; display:none; align-items:center; justify-content:center; }
+  .modal-overlay.open { display:flex; }
+  .module-item { transition: all 0.2s; }
+  .module-item:hover { background:#eff4ff; }
+  .annotation-enter { animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px);} to{opacity:1;transform:translateY(0);} }
+  ::-webkit-scrollbar { width:6px; }
+  ::-webkit-scrollbar-track { background:#f0f4ff; }
+  ::-webkit-scrollbar-thumb { background:#a9c7ff; border-radius:3px; }
+</style>
+</head>
+<body>
+
+<!-- ======== TOP NAV ======== -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 h-16 bg-surface-container-lowest border-b border-outline-variant shadow-sm">
+  <div class="flex items-center gap-8">
+    <span class="text-headline-md font-bold text-primary cursor-pointer" onclick="navigate('dashboard')">Academic Excellence Portal</span>
+    <nav class="hidden md:flex gap-6 items-center">
+      <a class="nav-top text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pb-1" data-page="dashboard" onclick="navigate('dashboard')">Dashboard</a>
+      <a class="nav-top text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pb-1" data-page="courses" onclick="navigate('course-modules')">Courses</a>
+      <a class="nav-top text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pb-1" data-page="library" onclick="navigate('library')">Library</a>
+      <a class="nav-top text-body-md text-on-surface-variant hover:text-primary transition-colors cursor-pointer pb-1" data-page="research" onclick="navigate('research')">Research</a>
+    </nav>
+  </div>
+  <div class="flex items-center gap-4">
+    <button onclick="saveProgress()" class="bg-primary-container text-on-primary px-5 py-2 rounded-lg text-label-md hover:bg-primary transition-all shadow-sm active:scale-95">Save Progress</button>
+    <div class="relative">
+      <span class="material-symbols-outlined text-on-surface-variant cursor-pointer p-2 hover:bg-surface-container rounded-full hover:text-primary transition-colors" onclick="toggleNotif()">notifications</span>
+      <span id="notif-badge" class="absolute top-1 right-1 w-2 h-2 bg-secondary-container rounded-full"></span>
+    </div>
+    <span class="material-symbols-outlined text-on-surface-variant cursor-pointer p-2 hover:bg-surface-container rounded-full hover:text-primary transition-colors" onclick="openSettings()">settings</span>
+    <div class="w-9 h-9 rounded-full bg-primary-container flex items-center justify-center cursor-pointer" onclick="navigate('profile')">
+      <span class="material-symbols-outlined text-on-primary text-xl fill-icon">account_circle</span>
+    </div>
+  </div>
+</header>
+
+<!-- ======== SIDEBAR ======== -->
+<aside class="fixed left-0 top-0 h-full w-64 z-40 bg-surface-container-low border-r border-outline-variant shadow-sm flex flex-col pt-20 pb-6">
+  <div class="flex flex-col items-center mb-8 px-4 text-center">
+    <div class="w-14 h-14 rounded-xl bg-primary-container flex items-center justify-center mb-3 shadow-sm">
+      <span class="material-symbols-outlined text-on-primary text-3xl fill-icon">school</span>
+    </div>
+    <h2 class="text-headline-sm font-bold text-primary">Learning Portal</h2>
+    <p class="text-on-surface-variant text-label-sm">Academic Excellence</p>
+  </div>
+  <nav class="flex-1 space-y-1 px-2">
+    <div class="nav-item sidebar-link rounded-md" data-nav="dashboard" onclick="navigate('dashboard')">
+      <span class="material-symbols-outlined">dashboard</span>
+      <span class="text-label-md">Dashboard</span>
+    </div>
+    <div class="nav-item sidebar-link rounded-md" data-nav="course-modules" onclick="navigate('course-modules')">
+      <span class="material-symbols-outlined">school</span>
+      <span class="text-label-md">Course Modules</span>
+    </div>
+    <div class="nav-item sidebar-link rounded-md" data-nav="expert-insights" onclick="navigate('expert-insights')">
+      <span class="material-symbols-outlined">smart_display</span>
+      <span class="text-label-md">Expert Insights</span>
+    </div>
+    <div class="nav-item sidebar-link rounded-md" data-nav="ai-quiz" onclick="navigate('ai-quiz')">
+      <span class="material-symbols-outlined">psychology</span>
+      <span class="text-label-md">AI Quiz</span>
+    </div>
+    <div class="nav-item sidebar-link rounded-md" data-nav="upload-content" onclick="navigate('upload-content')">
+      <span class="material-symbols-outlined">cloud_upload</span>
+      <span class="text-label-md">Upload Content</span>
+    </div>
+    <div class="nav-item sidebar-link rounded-md" data-nav="feedback" onclick="navigate('feedback')">
+      <span class="material-symbols-outlined">rate_review</span>
+      <span class="text-label-md">Feedback</span>
+    </div>
+    <div class="nav-item sidebar-link rounded-md" data-nav="help" onclick="navigate('help')">
+      <span class="material-symbols-outlined">help</span>
+      <span class="text-label-md">Help Center</span>
+    </div>
+  </nav>
+  <div class="px-4 space-y-3 mt-4">
+    <button onclick="navigate('course-modules')" class="w-full bg-primary-container text-on-primary py-3 rounded-lg text-label-md hover:bg-primary transition-all flex items-center justify-center gap-2 active:scale-95 shadow-sm">
+      <span class="material-symbols-outlined text-sm">play_arrow</span> Start Learning
+    </button>
+    <button onclick="logout()" class="w-full flex items-center gap-3 text-on-surface-variant px-4 py-2 rounded-md hover:bg-surface-container-high text-label-md transition-all">
+      <span class="material-symbols-outlined text-sm">logout</span> Log Out
+    </button>
+  </div>
+</aside>
+
+<!-- ======== MAIN CONTENT ======== -->
+<main class="ml-64 pt-20 min-h-screen pb-16">
+
+<!-- ===== PAGE: DASHBOARD ===== -->
+<div id="page-dashboard" class="page active slide-in px-8 py-6">
+  <div class="max-w-5xl mx-auto space-y-8">
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <span class="inline-block px-3 py-1 bg-secondary-container text-on-secondary-container text-label-sm rounded-full font-semibold mb-2">Module 4: Visualization</span>
+        <h1 class="text-headline-lg font-bold text-on-surface">CS101: Introduction to Data Science</h1>
+      </div>
+      <div class="flex items-center gap-3 bg-surface-container-lowest border border-outline-variant rounded-xl px-5 py-3">
+        <div>
+          <p class="text-label-sm text-on-surface-variant">Course Progress</p>
+          <div class="w-40 h-2 bg-surface-container-high rounded-full mt-1">
+            <div class="progress-bar h-full bg-primary-container rounded-full" style="width:65%"></div>
+          </div>
+        </div>
+        <span class="text-headline-sm font-bold text-primary">65%</span>
+      </div>
+    </div>
+
+    <!-- Slide Viewer + Annotations -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+        <div class="flex justify-between items-center px-5 py-3 border-b border-outline-variant">
+          <div class="flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-xl">slideshow</span>
+            <span class="text-label-md text-on-surface font-semibold">Data Visualization Basics.pptx</span>
+          </div>
+          <div class="flex gap-2">
+            <button class="p-2 rounded-lg hover:bg-surface-container transition-colors" title="Zoom"><span class="material-symbols-outlined text-on-surface-variant">zoom_in</span></button>
+            <button class="p-2 rounded-lg hover:bg-surface-container transition-colors" title="Fullscreen" onclick="openSlideModal()"><span class="material-symbols-outlined text-on-surface-variant">fullscreen</span></button>
+          </div>
+        </div>
+        <div class="bg-surface-dim relative" style="height:300px; display:flex; align-items:center; justify-content:center;">
+          <div class="text-center">
+            <div class="w-48 h-36 bg-surface-container-highest rounded-lg mx-auto mb-4 flex items-center justify-center shadow-sm border border-outline-variant">
+              <svg width="160" height="110" viewBox="0 0 160 110">
+                <rect x="10" y="20" width="18" height="60" fill="#003d7c" rx="2"/>
+                <rect x="34" y="35" width="18" height="45" fill="#0054a6" rx="2"/>
+                <rect x="58" y="15" width="18" height="65" fill="#003d7c" rx="2"/>
+                <rect x="82" y="45" width="18" height="35" fill="#0054a6" rx="2"/>
+                <rect x="106" y="25" width="18" height="55" fill="#185eb0" rx="2"/>
+                <rect x="130" y="10" width="18" height="70" fill="#003d7c" rx="2"/>
+                <line x1="5" y1="85" x2="155" y2="85" stroke="#c2c6d3" stroke-width="1.5"/>
+                <circle cx="19" cy="50" r="3" fill="#fc9910"/>
+                <circle cx="43" cy="65" r="3" fill="#fc9910"/>
+                <circle cx="67" cy="35" r="3" fill="#fc9910"/>
+                <circle cx="91" cy="55" r="3" fill="#fc9910"/>
+                <circle cx="115" cy="42" r="3" fill="#fc9910"/>
+                <circle cx="139" cy="28" r="3" fill="#fc9910"/>
+                <polyline points="19,50 43,65 67,35 91,55 115,42 139,28" stroke="#fc9910" stroke-width="1.5" fill="none"/>
+              </svg>
+            </div>
+            <p class="text-label-md text-on-surface-variant">Data Visualization Basics</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-between px-5 py-3 border-t border-outline-variant">
+          <button onclick="prevSlide()" class="p-2 rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-on-surface-variant">chevron_left</span></button>
+          <span id="slide-indicator" class="text-label-md text-on-surface-variant bg-surface-container px-4 py-1 rounded-full">Slide 12 / 48</span>
+          <button onclick="nextSlide()" class="p-2 rounded-lg hover:bg-surface-container transition-colors"><span class="material-symbols-outlined text-on-surface-variant">chevron_right</span></button>
+        </div>
+      </div>
+
+      <!-- Live Annotations -->
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-outline-variant">
+          <span class="material-symbols-outlined text-primary text-lg">edit_note</span>
+          <span class="text-label-md text-on-surface font-semibold">Live Annotations</span>
+        </div>
+        <div id="annotations-list" class="flex-1 overflow-y-auto p-3 space-y-3" style="max-height:250px">
+          <div class="bg-surface-container-low p-3 rounded-lg annotation-enter">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-label-sm font-semibold text-primary">Dr. Aris Thorne</span>
+              <span class="text-label-sm text-on-surface-variant">2m ago</span>
+            </div>
+            <p class="text-body-sm text-on-surface">Notice how the scale affects the perception of growth here.</p>
+          </div>
+          <div class="bg-surface-container-low p-3 rounded-lg annotation-enter">
+            <div class="flex justify-between items-center mb-1">
+              <span class="text-label-sm font-semibold text-tertiary">Sarah Jenkins</span>
+              <span class="text-label-sm text-on-surface-variant">10m ago</span>
+            </div>
+            <p class="text-body-sm text-on-surface">Is this chart type better than a pie chart for temporal data?</p>
+          </div>
+        </div>
+        <div class="p-3 border-t border-outline-variant">
+          <div class="flex gap-2">
+            <input id="annotation-input" type="text" placeholder="Add a note..." class="flex-1 text-body-sm border border-outline-variant rounded-lg px-3 py-2 focus:outline-none focus:border-primary-container bg-surface-container-low"/>
+            <button onclick="addAnnotation()" class="p-2 bg-primary-container text-on-primary rounded-lg hover:bg-primary transition-colors">
+              <span class="material-symbols-outlined text-sm">send</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expert Insight + AI Quiz CTA -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden card-hover">
+        <div class="bg-inverse-surface h-36 flex items-center justify-center relative cursor-pointer" onclick="navigate('expert-insights')">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <svg width="100%" height="144" viewBox="0 0 400 144">
+              <defs><linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#213145"/><stop offset="100%" style="stop-color:#1a3f6a"/></linearGradient></defs>
+              <rect width="400" height="144" fill="url(#bg1)"/>
+              <circle cx="200" cy="80" r="24" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+              <polygon points="194,70 194,90 214,80" fill="white"/>
+            </svg>
+          </div>
+          <div class="absolute bottom-2 left-3 bg-inverse-surface/80 text-inverse-on-surface text-label-sm px-2 py-1 rounded">12:45</div>
+        </div>
+        <div class="p-5">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="material-symbols-outlined text-primary text-sm">verified</span>
+            <span class="text-label-sm text-primary font-semibold tracking-wider">EXPERT INSIGHT</span>
+          </div>
+          <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Real-world Applications of Big Data</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Join Dr. Elena Rodriguez as she explores how global logistics firms leverage predictive modeling.</p>
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-tertiary-container flex items-center justify-center">
+              <span class="material-symbols-outlined text-on-tertiary text-sm fill-icon">person</span>
+            </div>
+            <div>
+              <p class="text-label-md text-on-surface font-semibold">Dr. Elena Rodriguez</p>
+              <p class="text-label-sm text-on-surface-variant">Chief Data Architect, TechLogix</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-surface-container-lowest rounded-xl border-2 border-dashed border-outline-variant shadow-sm p-6 flex flex-col items-center justify-center text-center card-hover">
+        <div class="w-14 h-14 bg-surface-container rounded-full flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined text-primary text-2xl">psychology</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-2">Challenge Your Knowledge</h3>
+        <p class="text-body-sm text-on-surface-variant mb-5">Our AI has analyzed today's session. Ready for a personalized 5-minute quiz to reinforce what you've learned?</p>
+        <button onclick="navigate('ai-quiz')" class="w-full bg-primary text-on-primary py-3 rounded-lg text-label-md hover:bg-on-primary-fixed-variant transition-all flex items-center justify-center gap-2 shadow-md active:scale-95">
+          <span class="material-symbols-outlined text-sm">auto_awesome</span> Generate AI Quiz
+        </button>
+        <div class="flex gap-4 mt-3 text-label-sm text-on-surface-variant">
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">schedule</span> 5 Mins</span>
+          <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">trending_up</span> Adaptive Difficulty</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback Section -->
+    <div id="feedback-section" class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-8 text-center">
+      <h3 class="text-headline-sm font-semibold text-on-surface mb-1">How was today's lecture?</h3>
+      <p class="text-body-sm text-on-surface-variant mb-6">Your feedback helps us improve the curriculum and delivery.</p>
+      <div class="flex justify-center gap-4 mb-2" id="star-rating">
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setRating(1)">
+          <span class="material-symbols-outlined text-2xl text-on-surface-variant" id="star-1">star</span>
+          <span class="text-label-sm text-on-surface-variant">Poor</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setRating(2)">
+          <span class="material-symbols-outlined text-2xl text-on-surface-variant" id="star-2">star</span>
+          <span class="text-label-sm text-on-surface-variant">Fair</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setRating(3)">
+          <span class="material-symbols-outlined text-2xl text-secondary-container fill-icon" id="star-3">star</span>
+          <span class="text-label-sm text-on-surface-variant">Good</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setRating(4)">
+          <span class="material-symbols-outlined text-2xl text-on-surface-variant" id="star-4">star</span>
+          <span class="text-label-sm text-on-surface-variant">Great</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setRating(5)">
+          <span class="material-symbols-outlined text-2xl text-on-surface-variant" id="star-5">star</span>
+          <span class="text-label-sm text-on-surface-variant">Excellent</span>
+        </button>
+      </div>
+      <div class="max-w-lg mx-auto mt-5">
+        <p class="text-label-md text-on-surface-variant mb-3 text-left">Any specific thoughts for the lecturer?</p>
+        <textarea id="feedback-text" rows="4" placeholder="The visualization examples were very helpful..." class="w-full border border-outline-variant rounded-lg px-4 py-3 text-body-sm focus:outline-none focus:border-primary-container bg-surface resize-none"></textarea>
+        <div class="flex justify-end mt-3">
+          <button onclick="submitFeedback()" class="bg-primary text-on-primary px-8 py-3 rounded-lg text-label-md hover:bg-on-primary-fixed-variant transition-all shadow-sm active:scale-95">Submit Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: COURSE MODULES ===== -->
+<div id="page-course-modules" class="page slide-in px-8 py-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+    <div>
+      <h1 class="text-headline-lg font-bold text-on-surface">Course Modules</h1>
+      <p class="text-body-md text-on-surface-variant mt-1">CS101: Introduction to Data Science</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Module Cards -->
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer" onclick="openModule(1)">
+        <div class="flex justify-between items-start mb-3">
+          <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-primary">data_object</span></div>
+          <span class="px-2 py-1 bg-green-100 text-green-700 text-label-sm rounded-full font-semibold">Completed</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Module 1: Introduction</h3>
+        <p class="text-body-sm text-on-surface-variant mb-3">Foundations of data science and the data pipeline.</p>
+        <div class="w-full h-1.5 bg-surface-container rounded-full"><div class="h-full bg-green-500 rounded-full" style="width:100%"></div></div>
+        <p class="text-label-sm text-on-surface-variant mt-1">100% complete</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer" onclick="openModule(2)">
+        <div class="flex justify-between items-start mb-3">
+          <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-primary">table_chart</span></div>
+          <span class="px-2 py-1 bg-green-100 text-green-700 text-label-sm rounded-full font-semibold">Completed</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Module 2: Data Types</h3>
+        <p class="text-body-sm text-on-surface-variant mb-3">Understanding structured and unstructured data.</p>
+        <div class="w-full h-1.5 bg-surface-container rounded-full"><div class="h-full bg-green-500 rounded-full" style="width:100%"></div></div>
+        <p class="text-label-sm text-on-surface-variant mt-1">100% complete</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer" onclick="openModule(3)">
+        <div class="flex justify-between items-start mb-3">
+          <div class="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-primary">query_stats</span></div>
+          <span class="px-2 py-1 bg-green-100 text-green-700 text-label-sm rounded-full font-semibold">Completed</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Module 3: Statistics</h3>
+        <p class="text-body-sm text-on-surface-variant mb-3">Descriptive and inferential statistical methods.</p>
+        <div class="w-full h-1.5 bg-surface-container rounded-full"><div class="h-full bg-green-500 rounded-full" style="width:100%"></div></div>
+        <p class="text-label-sm text-on-surface-variant mt-1">100% complete</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border-2 border-primary-container shadow-md p-5 card-hover cursor-pointer" onclick="openModule(4)">
+        <div class="flex justify-between items-start mb-3">
+          <div class="w-10 h-10 bg-primary-container/20 rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-primary-container">bar_chart</span></div>
+          <span class="px-2 py-1 bg-blue-100 text-primary text-label-sm rounded-full font-semibold">In Progress</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Module 4: Visualization</h3>
+        <p class="text-body-sm text-on-surface-variant mb-3">Charts, graphs, and storytelling with data.</p>
+        <div class="w-full h-1.5 bg-surface-container rounded-full"><div class="progress-bar h-full bg-primary-container rounded-full" style="width:65%"></div></div>
+        <p class="text-label-sm text-on-surface-variant mt-1">65% complete</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer opacity-70" onclick="openModule(5)">
+        <div class="flex justify-between items-start mb-3">
+          <div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-on-surface-variant">hub</span></div>
+          <span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-label-sm rounded-full">Locked</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Module 5: Machine Learning</h3>
+        <p class="text-body-sm text-on-surface-variant mb-3">Introduction to ML algorithms and models.</p>
+        <div class="w-full h-1.5 bg-surface-container rounded-full"><div class="h-full bg-outline-variant rounded-full" style="width:0%"></div></div>
+        <p class="text-label-sm text-on-surface-variant mt-1">Not started</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer opacity-70" onclick="openModule(6)">
+        <div class="flex justify-between items-start mb-3">
+          <div class="w-10 h-10 bg-surface-container rounded-lg flex items-center justify-center"><span class="material-symbols-outlined text-on-surface-variant">model_training</span></div>
+          <span class="px-2 py-1 bg-surface-container-high text-on-surface-variant text-label-sm rounded-full">Locked</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Module 6: Deep Learning</h3>
+        <p class="text-body-sm text-on-surface-variant mb-3">Neural networks and advanced deep learning.</p>
+        <div class="w-full h-1.5 bg-surface-container rounded-full"><div class="h-full bg-outline-variant rounded-full" style="width:0%"></div></div>
+        <p class="text-label-sm text-on-surface-variant mt-1">Not started</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: EXPERT INSIGHTS ===== -->
+<div id="page-expert-insights" class="page slide-in px-8 py-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+    <div>
+      <h1 class="text-headline-lg font-bold text-on-surface">Expert Insights</h1>
+      <p class="text-body-md text-on-surface-variant mt-1">Video lectures from industry professionals</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden card-hover cursor-pointer" onclick="playVideo(1)">
+        <div class="bg-inverse-surface h-44 flex items-center justify-center relative">
+          <svg width="100%" height="176" viewBox="0 0 400 176">
+            <defs><linearGradient id="vid1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#1a3f6a"/><stop offset="100%" style="stop-color:#0b1c30"/></linearGradient></defs>
+            <rect width="400" height="176" fill="url(#vid1)"/>
+            <circle cx="200" cy="88" r="30" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+            <polygon points="193,76 193,100 217,88" fill="white"/>
+          </svg>
+          <div class="absolute bottom-2 left-3 bg-black/70 text-white text-label-sm px-2 py-0.5 rounded">12:45</div>
+          <div class="absolute top-2 right-2 bg-secondary-container text-on-secondary-container text-label-sm px-2 py-0.5 rounded-full font-semibold">Featured</div>
+        </div>
+        <div class="p-4">
+          <span class="text-label-sm text-primary font-semibold">EXPERT INSIGHT</span>
+          <h3 class="text-headline-sm font-semibold mt-1 mb-1">Real-world Applications of Big Data</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Global logistics firms leverage predictive modeling for supply chain optimization.</p>
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-tertiary-container flex items-center justify-center">
+              <span class="material-symbols-outlined text-on-tertiary text-sm fill-icon">person</span>
+            </div>
+            <div>
+              <p class="text-label-md text-on-surface font-medium">Dr. Elena Rodriguez</p>
+              <p class="text-label-sm text-on-surface-variant">Chief Data Architect, TechLogix</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden card-hover cursor-pointer" onclick="playVideo(2)">
+        <div class="bg-inverse-surface h-44 flex items-center justify-center relative">
+          <svg width="100%" height="176" viewBox="0 0 400 176">
+            <defs><linearGradient id="vid2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#003d7c"/><stop offset="100%" style="stop-color:#1a3f6a"/></linearGradient></defs>
+            <rect width="400" height="176" fill="url(#vid2)"/>
+            <circle cx="200" cy="88" r="30" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+            <polygon points="193,76 193,100 217,88" fill="white"/>
+          </svg>
+          <div class="absolute bottom-2 left-3 bg-black/70 text-white text-label-sm px-2 py-0.5 rounded">08:30</div>
+        </div>
+        <div class="p-4">
+          <span class="text-label-sm text-primary font-semibold">EXPERT INSIGHT</span>
+          <h3 class="text-headline-sm font-semibold mt-1 mb-1">Data Ethics & Privacy in AI</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Navigating the ethical landscape of machine learning deployment.</p>
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-primary-container flex items-center justify-center">
+              <span class="material-symbols-outlined text-on-primary text-sm fill-icon">person</span>
+            </div>
+            <div>
+              <p class="text-label-md text-on-surface font-medium">Prof. James Okafor</p>
+              <p class="text-label-sm text-on-surface-variant">AI Ethics Researcher, MIT</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden card-hover cursor-pointer" onclick="playVideo(3)">
+        <div class="bg-surface-container-high h-44 flex items-center justify-center relative">
+          <svg width="100%" height="176" viewBox="0 0 400 176">
+            <defs><linearGradient id="vid3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#355683"/><stop offset="100%" style="stop-color:#213145"/></linearGradient></defs>
+            <rect width="400" height="176" fill="url(#vid3)"/>
+            <circle cx="200" cy="88" r="30" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+            <polygon points="193,76 193,100 217,88" fill="white"/>
+          </svg>
+          <div class="absolute bottom-2 left-3 bg-black/70 text-white text-label-sm px-2 py-0.5 rounded">15:20</div>
+        </div>
+        <div class="p-4">
+          <span class="text-label-sm text-primary font-semibold">EXPERT INSIGHT</span>
+          <h3 class="text-headline-sm font-semibold mt-1 mb-1">Building Data Pipelines at Scale</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Engineering robust ETL workflows for enterprise environments.</p>
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-secondary-fixed flex items-center justify-center">
+              <span class="material-symbols-outlined text-on-secondary-fixed text-sm fill-icon">person</span>
+            </div>
+            <div>
+              <p class="text-label-md text-on-surface font-medium">Mei Lin Zhang</p>
+              <p class="text-label-sm text-on-surface-variant">Senior Data Engineer, Stripe</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden card-hover cursor-pointer" onclick="playVideo(4)">
+        <div class="bg-surface-container-high h-44 flex items-center justify-center relative">
+          <svg width="100%" height="176" viewBox="0 0 400 176">
+            <defs><linearGradient id="vid4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#003d7c"/><stop offset="100%" style="stop-color:#355683"/></linearGradient></defs>
+            <rect width="400" height="176" fill="url(#vid4)"/>
+            <circle cx="200" cy="88" r="30" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.4)" stroke-width="2"/>
+            <polygon points="193,76 193,100 217,88" fill="white"/>
+          </svg>
+          <div class="absolute bottom-2 left-3 bg-black/70 text-white text-label-sm px-2 py-0.5 rounded">20:05</div>
+        </div>
+        <div class="p-4">
+          <span class="text-label-sm text-primary font-semibold">EXPERT INSIGHT</span>
+          <h3 class="text-headline-sm font-semibold mt-1 mb-1">NLP & Text Analytics</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Practical applications of natural language processing in production.</p>
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-full bg-tertiary-fixed flex items-center justify-center">
+              <span class="material-symbols-outlined text-on-tertiary-fixed text-sm fill-icon">person</span>
+            </div>
+            <div>
+              <p class="text-label-md text-on-surface font-medium">Dr. Riya Patel</p>
+              <p class="text-label-sm text-on-surface-variant">NLP Scientist, Google DeepMind</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: AI QUIZ ===== -->
+<div id="page-ai-quiz" class="page slide-in px-8 py-6">
+  <div class="max-w-3xl mx-auto">
+    <!-- Progress Header -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+      <div class="md:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-label-md text-on-surface-variant">Quiz Progress</span>
+          <span id="quiz-progress-text" class="text-label-md text-primary font-bold">60% Completed</span>
+        </div>
+        <div class="w-full h-3 bg-surface-container-high rounded-full overflow-hidden">
+          <div id="quiz-progress-bar" class="progress-bar h-full bg-primary-container rounded-full" style="width:60%"></div>
+        </div>
+        <p id="quiz-question-count" class="text-body-sm text-on-surface-variant mt-3">Question 6 of 10</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 flex items-center justify-center">
+        <div class="flex gap-6 items-center">
+          <div class="text-center">
+            <span class="material-symbols-outlined text-primary mb-1 block">timer</span>
+            <span id="quiz-timer" class="text-headline-sm font-bold text-on-surface block">08:42</span>
+            <span class="text-label-sm text-on-surface-variant">Remaining</span>
+          </div>
+          <div class="w-px h-12 bg-outline-variant"></div>
+          <div class="text-center">
+            <span class="material-symbols-outlined text-secondary-container mb-1 block fill-icon">stars</span>
+            <span id="quiz-score" class="text-headline-sm font-bold text-on-surface block">450</span>
+            <span class="text-label-sm text-on-surface-variant">Score</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question Area -->
+    <div id="quiz-container" class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-lg overflow-hidden relative">
+      <div class="absolute top-0 right-0 p-5 opacity-5 pointer-events-none">
+        <span class="material-symbols-outlined" style="font-size:120px">analytics</span>
+      </div>
+      <div class="p-8 relative z-10">
+        <div class="mb-6">
+          <span id="quiz-category" class="px-3 py-1 bg-secondary-container/20 text-secondary rounded-full text-label-sm inline-block font-semibold">Intermediate Statistics</span>
+          <h2 id="quiz-question" class="text-headline-md font-semibold text-on-surface mt-3">What is the primary goal of exploratory data analysis (EDA)?</h2>
+        </div>
+        <div id="quiz-options" class="space-y-3 mb-6"></div>
+        <div id="quiz-explanation" class="hidden bg-surface-container-low border-l-4 border-primary p-4 rounded-lg mb-5">
+          <p class="text-label-md text-primary font-semibold mb-1">Explanation</p>
+          <p id="quiz-explanation-text" class="text-body-sm text-on-surface-variant"></p>
+        </div>
+        <div class="flex justify-between items-center border-t border-outline-variant pt-5">
+          <button onclick="markReview()" id="mark-review-btn" class="flex items-center gap-2 text-on-surface-variant text-label-md hover:text-primary transition-colors">
+            <span class="material-symbols-outlined text-sm">flag</span> Mark for Review
+          </button>
+          <div class="flex gap-3">
+            <button onclick="prevQuestion()" class="px-5 py-2 text-label-md text-on-surface-variant border border-outline-variant rounded-lg hover:bg-surface-container-high transition-all">Previous</button>
+            <button id="next-btn" onclick="nextQuestion()" class="px-5 py-2 text-label-md bg-primary text-on-primary rounded-lg shadow-md hover:brightness-110 transition-all flex items-center gap-2 active:scale-95">
+              Next Question <span class="material-symbols-outlined text-sm">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hints & Past Performance -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+      <div class="bg-primary/5 p-5 rounded-xl border border-primary/20 flex gap-3">
+        <div class="w-11 h-11 bg-primary-container rounded-lg flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-on-primary">lightbulb</span>
+        </div>
+        <div>
+          <h4 class="text-label-md text-primary font-bold">Hint Available</h4>
+          <p class="text-body-sm text-on-surface-variant mt-1">Need a refresher? Unlock a hint for 50 points to focus on the key EDA principles.</p>
+          <button onclick="useHint()" class="mt-2 text-label-sm text-primary border border-primary/30 px-3 py-1 rounded-lg hover:bg-primary/10 transition-colors">Use Hint (-50pts)</button>
+        </div>
+      </div>
+      <div class="bg-surface-container-highest/50 p-5 rounded-xl border border-outline-variant flex gap-3">
+        <div class="w-11 h-11 bg-surface-dim rounded-lg flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-on-surface-variant">history</span>
+        </div>
+        <div>
+          <h4 class="text-label-md text-on-surface font-bold">Past Performance</h4>
+          <p class="text-body-sm text-on-surface-variant mt-1">You typically answer data visualization questions in under 45 seconds. Keep it up!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: FEEDBACK ===== -->
+<div id="page-feedback" class="page slide-in px-8 py-6">
+  <div class="max-w-2xl mx-auto space-y-6">
+    <div>
+      <h1 class="text-headline-lg font-bold text-on-surface">Feedback</h1>
+      <p class="text-body-md text-on-surface-variant mt-1">Share your learning experience</p>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-8">
+      <h3 class="text-headline-sm font-semibold text-on-surface mb-1">How was today's lecture?</h3>
+      <p class="text-body-sm text-on-surface-variant mb-6">Your feedback helps us improve the curriculum and delivery.</p>
+      <div class="flex justify-center gap-6 mb-2" id="star-rating-page">
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setPageRating(1)">
+          <span class="material-symbols-outlined text-3xl text-on-surface-variant" id="pstar-1">star</span>
+          <span class="text-label-sm text-on-surface-variant">Poor</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setPageRating(2)">
+          <span class="material-symbols-outlined text-3xl text-on-surface-variant" id="pstar-2">star</span>
+          <span class="text-label-sm text-on-surface-variant">Fair</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setPageRating(3)">
+          <span class="material-symbols-outlined text-3xl text-on-surface-variant" id="pstar-3">star</span>
+          <span class="text-label-sm text-on-surface-variant">Good</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setPageRating(4)">
+          <span class="material-symbols-outlined text-3xl text-on-surface-variant" id="pstar-4">star</span>
+          <span class="text-label-sm text-on-surface-variant">Great</span>
+        </button>
+        <button class="star-btn flex flex-col items-center gap-1" onclick="setPageRating(5)">
+          <span class="material-symbols-outlined text-3xl text-on-surface-variant" id="pstar-5">star</span>
+          <span class="text-label-sm text-on-surface-variant">Excellent</span>
+        </button>
+      </div>
+      <div class="mt-6">
+        <label class="text-label-md text-on-surface-variant block mb-2">Course</label>
+        <select class="w-full border border-outline-variant rounded-lg px-4 py-3 text-body-sm focus:outline-none focus:border-primary-container bg-surface mb-4">
+          <option>CS101: Introduction to Data Science</option>
+          <option>CS201: Advanced Algorithms</option>
+          <option>DS301: Machine Learning Fundamentals</option>
+        </select>
+        <label class="text-label-md text-on-surface-variant block mb-2">Any specific thoughts for the lecturer?</label>
+        <textarea id="page-feedback-text" rows="5" placeholder="The visualization examples were very helpful..." class="w-full border border-outline-variant rounded-lg px-4 py-3 text-body-sm focus:outline-none focus:border-primary-container bg-surface resize-none"></textarea>
+        <div class="mt-4">
+          <label class="text-label-md text-on-surface-variant block mb-3">Rate specific aspects:</label>
+          <div class="space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-body-sm text-on-surface">Content Quality</span>
+              <div class="flex gap-1" id="aspect-1">
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-1',1)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-1',2)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-1',3)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-1',4)">star</span>
+                <span class="material-symbols-outlined text-on-surface-variant text-lg cursor-pointer" onclick="setAspect('aspect-1',5)">star</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-body-sm text-on-surface">Delivery & Clarity</span>
+              <div class="flex gap-1" id="aspect-2">
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-2',1)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-2',2)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-2',3)">star</span>
+                <span class="material-symbols-outlined text-on-surface-variant text-lg cursor-pointer" onclick="setAspect('aspect-2',4)">star</span>
+                <span class="material-symbols-outlined text-on-surface-variant text-lg cursor-pointer" onclick="setAspect('aspect-2',5)">star</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-body-sm text-on-surface">Pace & Structure</span>
+              <div class="flex gap-1" id="aspect-3">
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-3',1)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-3',2)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-3',3)">star</span>
+                <span class="material-symbols-outlined text-secondary-container text-lg cursor-pointer fill-icon" onclick="setAspect('aspect-3',4)">star</span>
+                <span class="material-symbols-outlined text-on-surface-variant text-lg cursor-pointer" onclick="setAspect('aspect-3',5)">star</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-end mt-6">
+          <button onclick="submitPageFeedback()" class="bg-primary text-on-primary px-8 py-3 rounded-lg text-label-md hover:bg-on-primary-fixed-variant transition-all shadow-sm active:scale-95">Submit Feedback</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: HELP CENTER ===== -->
+<div id="page-help" class="page slide-in px-8 py-6">
+  <div class="max-w-3xl mx-auto space-y-6">
+    <div>
+      <h1 class="text-headline-lg font-bold text-on-surface">Help Center</h1>
+      <p class="text-body-md text-on-surface-variant mt-1">Find answers and get support</p>
+    </div>
+    <div class="relative">
+      <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+      <input type="text" placeholder="Search for help..." class="w-full pl-12 pr-4 py-3 border border-outline-variant rounded-xl text-body-md focus:outline-none focus:border-primary-container bg-surface-container-lowest shadow-sm"/>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 text-center card-hover cursor-pointer">
+        <div class="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined text-primary">play_circle</span></div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Getting Started</h3>
+        <p class="text-body-sm text-on-surface-variant">Learn how to navigate the platform</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 text-center card-hover cursor-pointer">
+        <div class="w-12 h-12 bg-secondary-container/20 rounded-full flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined text-secondary-container">quiz</span></div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Quiz & Assessments</h3>
+        <p class="text-body-sm text-on-surface-variant">FAQ about the AI quiz system</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 text-center card-hover cursor-pointer">
+        <div class="w-12 h-12 bg-tertiary/10 rounded-full flex items-center justify-center mx-auto mb-3"><span class="material-symbols-outlined text-tertiary">contact_support</span></div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Contact Support</h3>
+        <p class="text-body-sm text-on-surface-variant">Reach our support team directly</p>
+      </div>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6">
+      <h3 class="text-headline-sm font-semibold text-on-surface mb-4">Frequently Asked Questions</h3>
+      <div class="space-y-3" id="faq-list">
+        <div class="border border-outline-variant rounded-lg overflow-hidden">
+          <button onclick="toggleFaq(0)" class="w-full flex justify-between items-center px-4 py-3 text-left hover:bg-surface-container-low transition-colors">
+            <span class="text-body-md font-medium text-on-surface">How does the AI Quiz system work?</span>
+            <span class="material-symbols-outlined text-on-surface-variant faq-icon">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-4 pb-4"><p class="text-body-sm text-on-surface-variant">Our AI analyzes your learning session and generates personalized questions based on the content you've covered. The difficulty adapts based on your performance.</p></div>
+        </div>
+        <div class="border border-outline-variant rounded-lg overflow-hidden">
+          <button onclick="toggleFaq(1)" class="w-full flex justify-between items-center px-4 py-3 text-left hover:bg-surface-container-low transition-colors">
+            <span class="text-body-md font-medium text-on-surface">Can I retake a module quiz?</span>
+            <span class="material-symbols-outlined text-on-surface-variant faq-icon">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-4 pb-4"><p class="text-body-sm text-on-surface-variant">Yes! You can retake any quiz up to 3 times. Your highest score will be recorded. After 3 attempts, you'll need to wait 24 hours before retrying.</p></div>
+        </div>
+        <div class="border border-outline-variant rounded-lg overflow-hidden">
+          <button onclick="toggleFaq(2)" class="w-full flex justify-between items-center px-4 py-3 text-left hover:bg-surface-container-low transition-colors">
+            <span class="text-body-md font-medium text-on-surface">How are certificates awarded?</span>
+            <span class="material-symbols-outlined text-on-surface-variant faq-icon">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-4 pb-4"><p class="text-body-sm text-on-surface-variant">Certificates are awarded when you complete all modules with a minimum average score of 70%. You can download your certificate from the Dashboard.</p></div>
+        </div>
+        <div class="border border-outline-variant rounded-lg overflow-hidden">
+          <button onclick="toggleFaq(3)" class="w-full flex justify-between items-center px-4 py-3 text-left hover:bg-surface-container-low transition-colors">
+            <span class="text-body-md font-medium text-on-surface">How do I report a technical issue?</span>
+            <span class="material-symbols-outlined text-on-surface-variant faq-icon">expand_more</span>
+          </button>
+          <div class="faq-content hidden px-4 pb-4"><p class="text-body-sm text-on-surface-variant">Use the floating support button at the bottom right of any page, or email support@academicexcellence.edu. We typically respond within 4 business hours.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: LIBRARY ===== -->
+<div id="page-library" class="page slide-in px-8 py-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+    <div class="flex justify-between items-center">
+      <div>
+        <h1 class="text-headline-lg font-bold text-on-surface">Library</h1>
+        <p class="text-body-md text-on-surface-variant mt-1">Course materials and resources</p>
+      </div>
+      <button class="flex items-center gap-2 bg-primary text-on-primary px-4 py-2 rounded-lg text-label-md hover:bg-on-primary-fixed-variant transition-all active:scale-95">
+        <span class="material-symbols-outlined text-sm">upload</span> Upload
+      </button>
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 text-center card-hover cursor-pointer">
+        <span class="material-symbols-outlined text-primary text-3xl block mb-2">picture_as_pdf</span>
+        <p class="text-label-md text-on-surface">Data Viz Basics.pdf</p>
+        <p class="text-label-sm text-on-surface-variant mt-1">2.4 MB</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 text-center card-hover cursor-pointer">
+        <span class="material-symbols-outlined text-secondary-container text-3xl block mb-2">slideshow</span>
+        <p class="text-label-md text-on-surface">Module 4 Slides.pptx</p>
+        <p class="text-label-sm text-on-surface-variant mt-1">8.1 MB</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 text-center card-hover cursor-pointer">
+        <span class="material-symbols-outlined text-tertiary text-3xl block mb-2">dataset</span>
+        <p class="text-label-md text-on-surface">Sample Dataset.csv</p>
+        <p class="text-label-sm text-on-surface-variant mt-1">1.2 MB</p>
+      </div>
+      <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-4 text-center card-hover cursor-pointer">
+        <span class="material-symbols-outlined text-primary text-3xl block mb-2">article</span>
+        <p class="text-label-md text-on-surface">Reading List.docx</p>
+        <p class="text-label-sm text-on-surface-variant mt-1">0.3 MB</p>
+      </div>
+    </div>
+    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-surface-container-high">
+          <tr>
+            <th class="text-left px-5 py-3 text-label-md text-on-surface-variant font-semibold">Name</th>
+            <th class="text-left px-5 py-3 text-label-md text-on-surface-variant font-semibold">Module</th>
+            <th class="text-left px-5 py-3 text-label-md text-on-surface-variant font-semibold">Type</th>
+            <th class="text-left px-5 py-3 text-label-md text-on-surface-variant font-semibold">Size</th>
+            <th class="text-left px-5 py-3 text-label-md text-on-surface-variant font-semibold">Action</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-outline-variant">
+          <tr class="module-item"><td class="px-5 py-3 text-body-sm text-on-surface">Statistics Cheat Sheet</td><td class="px-5 py-3 text-body-sm text-on-surface-variant">Module 3</td><td class="px-5 py-3"><span class="px-2 py-0.5 bg-primary/10 text-primary text-label-sm rounded">PDF</span></td><td class="px-5 py-3 text-body-sm text-on-surface-variant">0.8 MB</td><td class="px-5 py-3"><button onclick="showToast('Download started!')" class="text-primary text-label-md hover:underline">Download</button></td></tr>
+          <tr class="module-item"><td class="px-5 py-3 text-body-sm text-on-surface">EDA Notebook Template</td><td class="px-5 py-3 text-body-sm text-on-surface-variant">Module 4</td><td class="px-5 py-3"><span class="px-2 py-0.5 bg-tertiary/10 text-tertiary text-label-sm rounded">IPYNB</span></td><td class="px-5 py-3 text-body-sm text-on-surface-variant">0.1 MB</td><td class="px-5 py-3"><button onclick="showToast('Download started!')" class="text-primary text-label-md hover:underline">Download</button></td></tr>
+          <tr class="module-item"><td class="px-5 py-3 text-body-sm text-on-surface">Introduction to Pandas</td><td class="px-5 py-3 text-body-sm text-on-surface-variant">Module 2</td><td class="px-5 py-3"><span class="px-2 py-0.5 bg-secondary-container/20 text-secondary text-label-sm rounded">Video</span></td><td class="px-5 py-3 text-body-sm text-on-surface-variant">145 MB</td><td class="px-5 py-3"><button onclick="navigate('expert-insights')" class="text-primary text-label-md hover:underline">Watch</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: RESEARCH ===== -->
+<div id="page-research" class="page slide-in px-8 py-6">
+  <div class="max-w-5xl mx-auto space-y-6">
+    <div>
+      <h1 class="text-headline-lg font-bold text-on-surface">Research</h1>
+      <p class="text-body-md text-on-surface-variant mt-1">Academic papers and research tools</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div class="md:col-span-2 space-y-4">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer">
+          <div class="flex gap-2 mb-2">
+            <span class="px-2 py-0.5 bg-primary/10 text-primary text-label-sm rounded font-medium">Data Science</span>
+            <span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-label-sm rounded">2024</span>
+          </div>
+          <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Advances in Automated Data Visualization</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Smith, J., Rodriguez, E., et al. — <em>Journal of Data Science, Vol. 12</em></p>
+          <div class="flex gap-3">
+            <button onclick="showToast('Opening paper...')" class="text-primary text-label-md border border-primary/30 px-3 py-1.5 rounded-lg hover:bg-primary/5 transition-colors">Read Paper</button>
+            <button onclick="showToast('Saved to library!')" class="text-on-surface-variant text-label-md border border-outline-variant px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors">Save</button>
+          </div>
+        </div>
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer">
+          <div class="flex gap-2 mb-2">
+            <span class="px-2 py-0.5 bg-tertiary/10 text-tertiary text-label-sm rounded font-medium">Machine Learning</span>
+            <span class="px-2 py-0.5 bg-surface-container text-on-surface-variant text-label-sm rounded">2023</span>
+          </div>
+          <h3 class="text-headline-sm font-semibold text-on-surface mb-1">Explainability in Deep Learning Models</h3>
+          <p class="text-body-sm text-on-surface-variant mb-3">Patel, R., Zhang, M. — <em>NeurIPS 2023 Conference Proceedings</em></p>
+          <div class="flex gap-3">
+            <button onclick="showToast('Opening paper...')" class="text-primary text-label-md border border-primary/30 px-3 py-1.5 rounded-lg hover:bg-primary/5 transition-colors">Read Paper</button>
+            <button onclick="showToast('Saved to library!')" class="text-on-surface-variant text-label-md border border-outline-variant px-3 py-1.5 rounded-lg hover:bg-surface-container transition-colors">Save</button>
+          </div>
+        </div>
+      </div>
+      <div class="space-y-4">
+        <div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5">
+          <h4 class="text-label-md text-on-surface font-semibold mb-3">Research Tools</h4>
+          <div class="space-y-2">
+            <button onclick="showToast('Opening citation tool...')" class="w-full flex items-center gap-3 p-3 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors text-left">
+              <span class="material-symbols-outlined text-primary text-sm">format_quote</span>
+              <span class="text-body-sm text-on-surface">Citation Generator</span>
+            </button>
+            <button onclick="showToast('Opening plagiarism checker...')" class="w-full flex items-center gap-3 p-3 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors text-left">
+              <span class="material-symbols-outlined text-primary text-sm">verified</span>
+              <span class="text-body-sm text-on-surface">Plagiarism Checker</span>
+            </button>
+            <button onclick="showToast('Opening note-taking app...')" class="w-full flex items-center gap-3 p-3 bg-surface-container-low rounded-lg hover:bg-surface-container transition-colors text-left">
+              <span class="material-symbols-outlined text-primary text-sm">edit_note</span>
+              <span class="text-body-sm text-on-surface">Research Notes</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PAGE: UPLOAD CONTENT ===== -->
+<div id="page-upload-content" class="page slide-in px-8 py-6">
+  <div class="max-w-5xl mx-auto space-y-8">
+
+    <!-- Header -->
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h1 class="text-headline-lg font-bold text-on-surface">Upload Content</h1>
+        <p class="text-body-md text-on-surface-variant mt-1">Tambahkan materi presentasi &amp; video ke modul kursus</p>
+      </div>
+      <div class="flex gap-3">
+        <button onclick="navigate('course-modules')" class="flex items-center gap-2 border border-outline-variant px-4 py-2 rounded-lg text-label-md text-on-surface-variant hover:bg-surface-container transition-all">
+          <span class="material-symbols-outlined text-sm">folder_open</span> Lihat Modul
+        </button>
+      </div>
+    </div>
+
+    <!-- Upload Tabs -->
+    <div class="flex gap-2 border-b border-outline-variant">
+      <button id="tab-ppt" onclick="switchUploadTab('ppt')" class="upload-tab px-5 py-3 text-label-md font-semibold text-primary border-b-2 border-primary flex items-center gap-2">
+        <span class="material-symbols-outlined text-sm">slideshow</span> Presentasi (PPT)
+      </button>
+      <button id="tab-video" onclick="switchUploadTab('video')" class="upload-tab px-5 py-3 text-label-md font-medium text-on-surface-variant border-b-2 border-transparent hover:text-primary flex items-center gap-2 transition-colors">
+        <span class="material-symbols-outlined text-sm">videocam</span> Video
+      </button>
+    </div>
+
+    <!-- ===== PPT UPLOAD PANEL ===== -->
+    <div id="panel-ppt" class="upload-panel space-y-6">
+      <!-- Drop Zone -->
+      <div id="ppt-dropzone" class="border-2 border-dashed border-outline-variant rounded-2xl bg-surface-container-low p-10 text-center transition-all" ondragover="handleDragOver(event,'ppt-dropzone')" ondragleave="handleDragLeave('ppt-dropzone')" ondrop="handleDrop(event,'ppt')">
+        <div class="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+          <span class="material-symbols-outlined text-primary" style="font-size:40px">slideshow</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-2">Drag &amp; Drop File Presentasi</h3>
+        <p class="text-body-sm text-on-surface-variant mb-5">Format yang didukung: .pptx, .ppt, .pdf • Maks. 100 MB per file</p>
+        <label class="cursor-pointer">
+          <input id="ppt-file-input" type="file" accept=".ppt,.pptx,.pdf" multiple class="hidden" onchange="handlePPTUpload(event)"/>
+          <span class="inline-flex items-center gap-2 bg-primary text-on-primary px-6 py-3 rounded-lg text-label-md hover:brightness-110 active:scale-95 transition-all shadow-md">
+            <span class="material-symbols-outlined text-sm">upload_file</span> Pilih File PPT
+          </span>
+        </label>
+      </div>
+
+      <!-- PPT Upload Meta Form -->
+      <div id="ppt-meta-form" class="hidden bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6 space-y-4">
+        <h3 class="text-headline-sm font-semibold text-on-surface flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">edit</span> Detail Presentasi
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Judul Presentasi *</label>
+            <input id="ppt-title" type="text" placeholder="cth: Data Visualization Basics" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+          </div>
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Modul Tujuan *</label>
+            <select id="ppt-module" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface">
+              <option value="">-- Pilih Modul --</option>
+              <option>Module 1: Introduction</option>
+              <option>Module 2: Data Types</option>
+              <option>Module 3: Statistics</option>
+              <option>Module 4: Visualization</option>
+              <option>Module 5: Machine Learning</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Pengajar / Dosen</label>
+            <input id="ppt-lecturer" type="text" placeholder="cth: Dr. Aris Thorne" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+          </div>
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Tanggal Materi</label>
+            <input id="ppt-date" type="date" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+          </div>
+        </div>
+        <div>
+          <label class="text-label-md text-on-surface-variant block mb-1">Deskripsi</label>
+          <textarea id="ppt-desc" rows="3" placeholder="Jelaskan isi materi ini secara singkat..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface resize-none"></textarea>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="clearPPTUpload()" class="px-5 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-label-md hover:bg-surface-container transition-all">Batal</button>
+          <button onclick="submitPPTUpload()" class="flex items-center gap-2 bg-primary text-on-primary px-6 py-2.5 rounded-lg text-label-md hover:brightness-110 transition-all shadow-sm active:scale-95">
+            <span class="material-symbols-outlined text-sm">cloud_upload</span> Upload Presentasi
+          </button>
+        </div>
+      </div>
+
+      <!-- PPT File Queue -->
+      <div id="ppt-queue" class="hidden space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-headline-sm font-semibold text-on-surface">File Siap Upload</h3>
+          <span id="ppt-queue-count" class="text-label-sm text-on-surface-variant bg-surface-container px-3 py-1 rounded-full">0 file</span>
+        </div>
+        <div id="ppt-queue-list" class="space-y-2"></div>
+      </div>
+
+      <!-- PPT Library -->
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-headline-sm font-semibold text-on-surface">Perpustakaan Presentasi</h3>
+          <div class="flex gap-2">
+            <input type="text" placeholder="Cari presentasi..." oninput="filterPPTLibrary(this.value)" class="border border-outline-variant rounded-lg px-3 py-2 text-body-sm focus:outline-none focus:border-primary-container bg-surface-container-lowest text-sm"/>
+          </div>
+        </div>
+        <div id="ppt-library" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== VIDEO UPLOAD PANEL ===== -->
+    <div id="panel-video" class="upload-panel hidden space-y-6">
+      <!-- Drop Zone -->
+      <div id="video-dropzone" class="border-2 border-dashed border-outline-variant rounded-2xl bg-surface-container-low p-10 text-center transition-all" ondragover="handleDragOver(event,'video-dropzone')" ondragleave="handleDragLeave('video-dropzone')" ondrop="handleDrop(event,'video')">
+        <div class="w-20 h-20 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto mb-5">
+          <span class="material-symbols-outlined text-secondary-container" style="font-size:40px">video_library</span>
+        </div>
+        <h3 class="text-headline-sm font-semibold text-on-surface mb-2">Drag &amp; Drop File Video</h3>
+        <p class="text-body-sm text-on-surface-variant mb-5">Format yang didukung: .mp4, .mov, .webm, .avi • Maks. 2 GB per file</p>
+        <label class="cursor-pointer">
+          <input id="video-file-input" type="file" accept="video/*" multiple class="hidden" onchange="handleVideoUpload(event)"/>
+          <span class="inline-flex items-center gap-2 bg-secondary-container text-on-secondary px-6 py-3 rounded-lg text-label-md hover:brightness-95 active:scale-95 transition-all shadow-md">
+            <span class="material-symbols-outlined text-sm">upload</span> Pilih File Video
+          </span>
+        </label>
+        <p class="text-label-sm text-on-surface-variant mt-4">Atau masukkan URL video eksternal</p>
+        <div class="flex gap-2 mt-2 max-w-lg mx-auto">
+          <input id="video-url-input" type="url" placeholder="https://youtube.com/watch?v=... atau URL video lain" class="flex-1 border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+          <button onclick="addVideoURL()" class="bg-primary-container text-on-primary px-4 py-2.5 rounded-lg text-label-md hover:bg-primary transition-all">Tambah</button>
+        </div>
+      </div>
+
+      <!-- Video Upload Meta Form -->
+      <div id="video-meta-form" class="hidden bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-6 space-y-4">
+        <h3 class="text-headline-sm font-semibold text-on-surface flex items-center gap-2">
+          <span class="material-symbols-outlined text-secondary-container">movie</span> Detail Video
+        </h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Judul Video *</label>
+            <input id="video-title" type="text" placeholder="cth: Intro to Matplotlib" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+          </div>
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Modul Tujuan *</label>
+            <select id="video-module" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface">
+              <option value="">-- Pilih Modul --</option>
+              <option>Module 1: Introduction</option>
+              <option>Module 2: Data Types</option>
+              <option>Module 3: Statistics</option>
+              <option>Module 4: Visualization</option>
+              <option>Module 5: Machine Learning</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Narasumber / Presenter</label>
+            <input id="video-presenter" type="text" placeholder="cth: Dr. Elena Rodriguez" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+          </div>
+          <div>
+            <label class="text-label-md text-on-surface-variant block mb-1">Kategori</label>
+            <select id="video-category" class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface">
+              <option>Kuliah / Lecture</option>
+              <option>Expert Insight</option>
+              <option>Tutorial Praktis</option>
+              <option>Diskusi Panel</option>
+              <option>Demo Lab</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label class="text-label-md text-on-surface-variant block mb-1">Deskripsi Video</label>
+          <textarea id="video-desc" rows="3" placeholder="Jelaskan topik atau tujuan belajar dari video ini..." class="w-full border border-outline-variant rounded-lg px-4 py-2.5 text-body-sm focus:outline-none focus:border-primary-container bg-surface resize-none"></textarea>
+        </div>
+        <div class="flex items-center gap-4">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="video-captions" type="checkbox" class="w-4 h-4 accent-primary"/>
+            <span class="text-body-sm text-on-surface">Generate subtitle otomatis</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input id="video-featured" type="checkbox" class="w-4 h-4 accent-primary"/>
+            <span class="text-body-sm text-on-surface">Tandai sebagai Featured</span>
+          </label>
+        </div>
+        <div class="flex gap-3">
+          <button onclick="clearVideoUpload()" class="px-5 py-2.5 border border-outline-variant text-on-surface-variant rounded-lg text-label-md hover:bg-surface-container transition-all">Batal</button>
+          <button onclick="submitVideoUpload()" class="flex items-center gap-2 bg-secondary-container text-on-secondary px-6 py-2.5 rounded-lg text-label-md hover:brightness-95 transition-all shadow-sm active:scale-95">
+            <span class="material-symbols-outlined text-sm">cloud_upload</span> Upload Video
+          </button>
+        </div>
+      </div>
+
+      <!-- Video File Queue -->
+      <div id="video-queue" class="hidden space-y-3">
+        <div class="flex justify-between items-center">
+          <h3 class="text-headline-sm font-semibold text-on-surface">File Video Siap Upload</h3>
+          <span id="video-queue-count" class="text-label-sm text-on-surface-variant bg-surface-container px-3 py-1 rounded-full">0 file</span>
+        </div>
+        <div id="video-queue-list" class="space-y-2"></div>
+      </div>
+
+      <!-- Video Library -->
+      <div>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-headline-sm font-semibold text-on-surface">Perpustakaan Video</h3>
+          <div class="flex gap-2">
+            <select onchange="filterVideoLibrary(this.value)" class="border border-outline-variant rounded-lg px-3 py-2 text-body-sm focus:outline-none focus:border-primary-container bg-surface-container-lowest">
+              <option value="">Semua Kategori</option>
+              <option>Kuliah / Lecture</option>
+              <option>Expert Insight</option>
+              <option>Tutorial Praktis</option>
+            </select>
+          </div>
+        </div>
+        <div id="video-library" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- END UPLOAD CONTENT PAGE -->
+
+</main>
+
+<!-- ======== FOOTER ======== -->
+<footer class="ml-64 bg-inverse-surface text-inverse-on-surface px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+  <div>
+    <p class="text-headline-sm font-bold">Academic Excellence Portal</p>
+    <p class="text-label-sm opacity-70">© 2024 University Academic Excellence Portal. All rights reserved.</p>
+  </div>
+  <div class="flex gap-6">
+    <a href="#" class="text-label-sm opacity-70 hover:opacity-100 transition-opacity">Institutional Policy</a>
+    <a href="#" class="text-label-sm opacity-70 hover:opacity-100 transition-opacity">Data Privacy</a>
+    <a href="#" class="text-label-sm opacity-70 hover:opacity-100 transition-opacity">Accessibility</a>
+    <a href="#" class="text-label-sm opacity-70 hover:opacity-100 transition-opacity">Contact Support</a>
+  </div>
+</footer>
+
+<!-- ======== FLOATING SUPPORT ======== -->
+<button onclick="openSupport()" class="fixed bottom-8 right-8 z-50 w-14 h-14 bg-primary text-on-primary rounded-full shadow-xl flex items-center justify-center hover:scale-110 active:scale-95 transition-transform">
+  <span class="material-symbols-outlined">support_agent</span>
+</button>
+
+<!-- ======== TOAST ======== -->
+<div id="toast" class="toast bg-inverse-surface text-inverse-on-surface px-5 py-3 rounded-xl shadow-xl flex items-center gap-3">
+  <span class="material-symbols-outlined text-sm text-primary-fixed">check_circle</span>
+  <span id="toast-message" class="text-body-sm">Action completed</span>
+</div>
+
+<!-- ======== MODAL: SLIDE FULLSCREEN ======== -->
+<div id="slide-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl p-6 max-w-2xl w-full mx-4 relative">
+    <button onclick="closeModal('slide-modal')" class="absolute top-4 right-4 p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    <h3 class="text-headline-sm font-semibold text-on-surface mb-4">Data Visualization Basics.pptx</h3>
+    <div class="bg-surface-dim rounded-lg flex items-center justify-center" style="height:320px">
+      <div class="text-center">
+        <svg width="200" height="140" viewBox="0 0 200 140">
+          <rect x="10" y="20" width="25" height="80" fill="#003d7c" rx="3"/>
+          <rect x="42" y="40" width="25" height="60" fill="#0054a6" rx="3"/>
+          <rect x="74" y="15" width="25" height="85" fill="#003d7c" rx="3"/>
+          <rect x="106" y="50" width="25" height="50" fill="#0054a6" rx="3"/>
+          <rect x="138" y="30" width="25" height="70" fill="#185eb0" rx="3"/>
+          <rect x="170" y="10" width="25" height="90" fill="#003d7c" rx="3"/>
+          <line x1="5" y1="105" x2="200" y2="105" stroke="#c2c6d3" stroke-width="1.5"/>
+        </svg>
+        <p class="text-label-md text-on-surface-variant mt-2">Slide 12 of 48 — Visualization Techniques</p>
+      </div>
+    </div>
+    <div class="flex justify-between mt-4">
+      <button onclick="prevSlide()" class="flex items-center gap-1 text-primary text-label-md"><span class="material-symbols-outlined text-sm">chevron_left</span>Previous</button>
+      <button onclick="nextSlide()" class="flex items-center gap-1 text-primary text-label-md">Next<span class="material-symbols-outlined text-sm">chevron_right</span></button>
+    </div>
+  </div>
+</div>
+
+<!-- ======== MODAL: SETTINGS ======== -->
+<div id="settings-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl p-6 max-w-md w-full mx-4 relative">
+    <button onclick="closeModal('settings-modal')" class="absolute top-4 right-4 p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    <h3 class="text-headline-sm font-semibold text-on-surface mb-5">Settings</h3>
+    <div class="space-y-4">
+      <div class="flex justify-between items-center py-3 border-b border-outline-variant">
+        <span class="text-body-md text-on-surface">Email Notifications</span>
+        <div id="notif-toggle" onclick="toggleSwitch('notif-toggle')" class="w-12 h-6 bg-primary-container rounded-full cursor-pointer flex items-center px-1 transition-colors">
+          <div class="w-4 h-4 bg-white rounded-full shadow ml-auto transition-all"></div>
+        </div>
+      </div>
+      <div class="flex justify-between items-center py-3 border-b border-outline-variant">
+        <span class="text-body-md text-on-surface">Auto-save Progress</span>
+        <div id="save-toggle" onclick="toggleSwitch('save-toggle')" class="w-12 h-6 bg-primary-container rounded-full cursor-pointer flex items-center px-1 transition-colors">
+          <div class="w-4 h-4 bg-white rounded-full shadow ml-auto transition-all"></div>
+        </div>
+      </div>
+      <div class="flex justify-between items-center py-3 border-b border-outline-variant">
+        <span class="text-body-md text-on-surface">Quiz Timer</span>
+        <div id="timer-toggle" onclick="toggleSwitch('timer-toggle')" class="w-12 h-6 bg-primary-container rounded-full cursor-pointer flex items-center px-1 transition-colors">
+          <div class="w-4 h-4 bg-white rounded-full shadow ml-auto transition-all"></div>
+        </div>
+      </div>
+      <div>
+        <label class="text-label-md text-on-surface-variant block mb-2">Language</label>
+        <select class="w-full border border-outline-variant rounded-lg px-3 py-2 text-body-sm focus:outline-none focus:border-primary-container bg-surface">
+          <option>English</option>
+          <option>Bahasa Indonesia</option>
+          <option>Español</option>
+          <option>中文</option>
+        </select>
+      </div>
+    </div>
+    <button onclick="closeModal('settings-modal'); showToast('Settings saved!')" class="mt-6 w-full bg-primary text-on-primary py-3 rounded-lg text-label-md hover:bg-on-primary-fixed-variant transition-all active:scale-95">Save Settings</button>
+  </div>
+</div>
+
+<!-- ======== MODAL: NOTIFICATIONS ======== -->
+<div id="notif-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl p-6 max-w-sm w-full mx-4 relative" style="position:fixed;top:70px;right:20px;max-width:320px;">
+    <button onclick="closeModal('notif-modal')" class="absolute top-4 right-4 p-1 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-sm text-on-surface-variant">close</span></button>
+    <h3 class="text-headline-sm font-semibold text-on-surface mb-4">Notifications</h3>
+    <div class="space-y-3">
+      <div class="flex gap-3 p-3 bg-primary/5 rounded-lg border border-primary/10">
+        <div class="w-8 h-8 bg-primary-container rounded-full flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-sm">quiz</span></div>
+        <div>
+          <p class="text-body-sm font-medium text-on-surface">New Quiz Available</p>
+          <p class="text-label-sm text-on-surface-variant">Module 4 quiz is ready to take</p>
+          <p class="text-label-sm text-on-surface-variant mt-0.5">2 min ago</p>
+        </div>
+      </div>
+      <div class="flex gap-3 p-3 bg-surface-container-low rounded-lg">
+        <div class="w-8 h-8 bg-secondary-container/20 rounded-full flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-secondary-container text-sm">emoji_events</span></div>
+        <div>
+          <p class="text-body-sm font-medium text-on-surface">Achievement Unlocked!</p>
+          <p class="text-label-sm text-on-surface-variant">You completed Module 3 with 95%</p>
+          <p class="text-label-sm text-on-surface-variant mt-0.5">1 hour ago</p>
+        </div>
+      </div>
+      <div class="flex gap-3 p-3 bg-surface-container-low rounded-lg">
+        <div class="w-8 h-8 bg-surface-container-high rounded-full flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-surface-variant text-sm">schedule</span></div>
+        <div>
+          <p class="text-body-sm font-medium text-on-surface">Reminder</p>
+          <p class="text-label-sm text-on-surface-variant">Live session with Dr. Rodriguez tomorrow at 10am</p>
+          <p class="text-label-sm text-on-surface-variant mt-0.5">3 hours ago</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== MODAL: QUIZ RESULTS ======== -->
+<div id="results-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl p-8 max-w-md w-full mx-4 text-center">
+    <div class="w-20 h-20 bg-primary-container rounded-full flex items-center justify-center mx-auto mb-4">
+      <span class="material-symbols-outlined text-on-primary text-4xl fill-icon">emoji_events</span>
+    </div>
+    <h2 class="text-headline-md font-bold text-on-surface mb-1">Quiz Completed!</h2>
+    <p class="text-body-md text-on-surface-variant mb-5">Great job! Here's your performance summary.</p>
+    <div class="grid grid-cols-3 gap-3 mb-5">
+      <div class="bg-surface-container-low rounded-xl p-3">
+        <p class="text-headline-sm font-bold text-primary">8/10</p>
+        <p class="text-label-sm text-on-surface-variant">Correct</p>
+      </div>
+      <div class="bg-surface-container-low rounded-xl p-3">
+        <p class="text-headline-sm font-bold text-secondary-container">750</p>
+        <p class="text-label-sm text-on-surface-variant">Score</p>
+      </div>
+      <div class="bg-surface-container-low rounded-xl p-3">
+        <p class="text-headline-sm font-bold text-tertiary">A</p>
+        <p class="text-label-sm text-on-surface-variant">Grade</p>
+      </div>
+    </div>
+    <div class="flex gap-3">
+      <button onclick="closeModal('results-modal')" class="flex-1 border border-outline-variant text-on-surface py-2 rounded-lg text-label-md hover:bg-surface-container transition-all">Review</button>
+      <button onclick="closeModal('results-modal'); navigate('dashboard')" class="flex-1 bg-primary text-on-primary py-2 rounded-lg text-label-md hover:brightness-110 transition-all active:scale-95">Back to Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ======== MODAL: SUPPORT ======== -->
+<div id="support-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl p-6 max-w-md w-full mx-4">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-headline-sm font-semibold text-on-surface">Contact Support</h3>
+      <button onclick="closeModal('support-modal')" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="space-y-3 mb-4">
+      <div>
+        <label class="text-label-md text-on-surface-variant block mb-1">Subject</label>
+        <input type="text" placeholder="Describe your issue briefly" class="w-full border border-outline-variant rounded-lg px-4 py-2 text-body-sm focus:outline-none focus:border-primary-container bg-surface"/>
+      </div>
+      <div>
+        <label class="text-label-md text-on-surface-variant block mb-1">Message</label>
+        <textarea rows="4" placeholder="Describe your problem in detail..." class="w-full border border-outline-variant rounded-lg px-4 py-2 text-body-sm focus:outline-none focus:border-primary-container bg-surface resize-none"></textarea>
+      </div>
+    </div>
+    <button onclick="closeModal('support-modal'); showToast('Ticket submitted! We\'ll respond within 4 hours.')" class="w-full bg-primary text-on-primary py-3 rounded-lg text-label-md hover:bg-on-primary-fixed-variant transition-all active:scale-95">Submit Ticket</button>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+let currentPage = 'dashboard';
+let currentSlide = 12;
+const totalSlides = 48;
+let currentQuestion = 5;
+let quizScore = 450;
+let selectedOption = 1;
+let answered = false;
+let quizRating = 3;
+let pageRating = 0;
+let timerInterval;
+let timerSeconds = 522;
+let markedReview = false;
+
+// ===== QUIZ DATA =====
+const questions = [
+  {
+    q: "What does EDA stand for in data science?",
+    category: "Fundamentals",
+    options: ["Exploratory Data Analysis", "Extended Data Architecture", "External Data Algorithm", "Encoded Data Attributes"],
+    correct: 0,
+    explanation: "EDA stands for Exploratory Data Analysis — the process of analyzing datasets to summarize their main characteristics."
+  },
+  {
+    q: "Which Python library is most commonly used for data visualization?",
+    category: "Tools & Libraries",
+    options: ["NumPy", "Pandas", "Matplotlib", "Scikit-learn"],
+    correct: 2,
+    explanation: "Matplotlib is the foundational visualization library in Python. Seaborn builds on top of it for statistical visualizations."
+  },
+  {
+    q: "What type of chart is best for showing the distribution of a continuous variable?",
+    category: "Visualization",
+    options: ["Bar chart", "Pie chart", "Histogram", "Scatter plot"],
+    correct: 2,
+    explanation: "Histograms are ideal for showing the frequency distribution of a continuous variable by dividing data into bins."
+  },
+  {
+    q: "What is the primary goal of exploratory data analysis (EDA)?",
+    category: "Intermediate Statistics",
+    options: [
+      "To prove a specific hypothesis with 99% certainty using advanced neural networks.",
+      "To summarize the main characteristics of a dataset, often with visual methods, before formal modeling.",
+      "To clean all missing values automatically without human intervention or data inspection.",
+      "To encrypt data so it cannot be accessed by unauthorized users during training."
+    ],
+    correct: 1,
+    explanation: "EDA's primary goal is to summarize a dataset's main characteristics, detect patterns, spot anomalies, and test assumptions before formal analysis."
+  },
+  {
+    q: "Which measure of central tendency is most affected by outliers?",
+    category: "Intermediate Statistics",
+    options: ["Mode", "Median", "Mean", "Range"],
+    correct: 2,
+    explanation: "The mean is most sensitive to outliers because it incorporates every data point in the calculation. Median is more robust."
+  },
+  {
+    q: "In a correlation matrix, a value close to +1 indicates:",
+    category: "Advanced Analytics",
+    options: ["No correlation", "Strong negative correlation", "Strong positive correlation", "Weak positive correlation"],
+    correct: 2,
+    explanation: "A Pearson correlation coefficient close to +1 indicates a strong positive linear relationship between two variables."
+  },
+  {
+    q: "What is overfitting in machine learning?",
+    category: "Machine Learning",
+    options: [
+      "When a model performs well on both training and test data",
+      "When a model learns the training data too well including noise",
+      "When a model cannot be trained due to insufficient data",
+      "When a model has too few parameters"
+    ],
+    correct: 1,
+    explanation: "Overfitting occurs when a model learns patterns specific to the training data, including noise, causing poor generalization to unseen data."
+  },
+  {
+    q: "Which of the following is a dimensionality reduction technique?",
+    category: "Advanced Analytics",
+    options: ["K-Means Clustering", "Decision Tree", "Principal Component Analysis (PCA)", "Linear Regression"],
+    correct: 2,
+    explanation: "PCA (Principal Component Analysis) reduces the number of features in a dataset while retaining as much variance as possible."
+  },
+  {
+    q: "What does the p-value represent in hypothesis testing?",
+    category: "Intermediate Statistics",
+    options: [
+      "The probability that the alternative hypothesis is true",
+      "The probability of observing data as extreme as the sample, given null hypothesis is true",
+      "The confidence level of the test",
+      "The size of the effect being measured"
+    ],
+    correct: 1,
+    explanation: "The p-value is the probability of observing a result at least as extreme as the sample data, assuming the null hypothesis is true."
+  },
+  {
+    q: "Which of these is NOT a type of data visualization?",
+    category: "Visualization",
+    options: ["Heatmap", "Box plot", "Gradient descent", "Violin plot"],
+    correct: 2,
+    explanation: "Gradient descent is an optimization algorithm used in machine learning, not a data visualization type."
+  }
+];
+
+// ===== NAVIGATION =====
+function navigate(page) {
+  // Hide all pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  
+  // Show target page
+  const target = document.getElementById('page-' + page);
+  if (target) {
+    target.classList.add('active');
+    target.classList.remove('slide-in');
+    void target.offsetWidth;
+    target.classList.add('slide-in');
+  }
+  
+  // Update sidebar
+  document.querySelectorAll('.nav-item').forEach(el => {
+    el.classList.remove('active', 'bg-primary/10', 'text-primary', 'font-bold');
+  });
+  const activeNav = document.querySelector(`[data-nav="${page}"]`);
+  if (activeNav) activeNav.classList.add('active');
+  
+  // Update top nav underline
+  document.querySelectorAll('.nav-top').forEach(el => {
+    el.classList.remove('text-primary', 'border-b-2', 'border-primary');
+    el.classList.add('text-on-surface-variant');
+  });
+  const pageToNavMap = {
+    'dashboard': 'dashboard', 'course-modules': 'courses',
+    'expert-insights': 'courses', 'ai-quiz': 'courses',
+    'feedback': 'dashboard', 'library': 'library', 'research': 'research'
+  };
+  const topNavPage = pageToNavMap[page];
+  if (topNavPage) {
+    document.querySelectorAll('.nav-top').forEach(el => {
+      if (el.dataset.page === topNavPage) {
+        el.classList.add('text-primary', 'border-b-2', 'border-primary');
+        el.classList.remove('text-on-surface-variant');
+      }
+    });
+  }
+  
+  currentPage = page;
+  window.scrollTo(0, 0);
+  
+  // Start quiz timer if entering quiz
+  if (page === 'ai-quiz') {
+    startTimer();
+    renderQuestion();
+  } else {
+    clearInterval(timerInterval);
+  }
+}
+
+// ===== SLIDE CONTROLS =====
+function nextSlide() {
+  if (currentSlide < totalSlides) {
+    currentSlide++;
+    updateSlideIndicator();
+  }
+}
+function prevSlide() {
+  if (currentSlide > 1) {
+    currentSlide--;
+    updateSlideIndicator();
+  }
+}
+function updateSlideIndicator() {
+  document.querySelectorAll('#slide-indicator').forEach(el => {
+    el.textContent = `Slide ${currentSlide} / ${totalSlides}`;
+  });
+}
+function openSlideModal() {
+  document.getElementById('slide-modal').classList.add('open');
+}
+
+// ===== ANNOTATIONS =====
+function addAnnotation() {
+  const input = document.getElementById('annotation-input');
+  const text = input.value.trim();
+  if (!text) return;
+  const list = document.getElementById('annotations-list');
+  const div = document.createElement('div');
+  div.className = 'bg-surface-container-low p-3 rounded-lg annotation-enter';
+  div.innerHTML = `
+    <div class="flex justify-between items-center mb-1">
+      <span class="text-label-sm font-semibold text-primary">You</span>
+      <span class="text-label-sm text-on-surface-variant">Just now</span>
+    </div>
+    <p class="text-body-sm text-on-surface">${text}</p>
+  `;
+  list.appendChild(div);
+  list.scrollTop = list.scrollHeight;
+  input.value = '';
+  showToast('Note added!');
+}
+
+// ===== STAR RATING (dashboard) =====
+function setRating(val) {
+  quizRating = val;
+  for (let i = 1; i <= 5; i++) {
+    const star = document.getElementById('star-' + i);
+    if (i <= val) {
+      star.classList.add('fill-icon', 'text-secondary-container');
+      star.classList.remove('text-on-surface-variant');
+    } else {
+      star.classList.remove('fill-icon', 'text-secondary-container');
+      star.classList.add('text-on-surface-variant');
+    }
+  }
+}
+
+// ===== STAR RATING (page) =====
+function setPageRating(val) {
+  pageRating = val;
+  for (let i = 1; i <= 5; i++) {
+    const star = document.getElementById('pstar-' + i);
+    if (i <= val) {
+      star.classList.add('fill-icon', 'text-secondary-container');
+      star.classList.remove('text-on-surface-variant');
+    } else {
+      star.classList.remove('fill-icon', 'text-secondary-container');
+      star.classList.add('text-on-surface-variant');
+    }
+  }
+}
+
+function setAspect(id, val) {
+  const container = document.getElementById(id);
+  const stars = container.querySelectorAll('.material-symbols-outlined');
+  stars.forEach((s, i) => {
+    if (i < val) {
+      s.classList.add('fill-icon', 'text-secondary-container');
+      s.classList.remove('text-on-surface-variant');
+    } else {
+      s.classList.remove('fill-icon', 'text-secondary-container');
+      s.classList.add('text-on-surface-variant');
+    }
+  });
+}
+
+// ===== QUIZ =====
+function startTimer() {
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    if (timerSeconds > 0) {
+      timerSeconds--;
+      const m = Math.floor(timerSeconds / 60).toString().padStart(2, '0');
+      const s = (timerSeconds % 60).toString().padStart(2, '0');
+      const el = document.getElementById('quiz-timer');
+      if (el) el.textContent = `${m}:${s}`;
+    } else {
+      clearInterval(timerInterval);
+      showToast('Time is up!');
+    }
+  }, 1000);
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  if (!q) return;
+  
+  answered = false;
+  selectedOption = -1;
+  
+  document.getElementById('quiz-category').textContent = q.category;
+  document.getElementById('quiz-question').textContent = q.q;
+  document.getElementById('quiz-explanation').classList.add('hidden');
+  document.getElementById('next-btn').textContent = '';
+  document.getElementById('next-btn').innerHTML = 'Next Question <span class="material-symbols-outlined text-sm">arrow_forward</span>';
+  
+  const optContainer = document.getElementById('quiz-options');
+  optContainer.innerHTML = '';
+  q.options.forEach((opt, idx) => {
+    const div = document.createElement('div');
+    div.className = 'option-card flex items-center p-4 border-2 border-outline-variant rounded-xl';
+    div.innerHTML = `
+      <div class="w-9 h-9 rounded-full border-2 border-outline-variant flex items-center justify-center font-bold text-on-surface-variant text-sm opt-letter">${['A','B','C','D'][idx]}</div>
+      <p class="ml-3 text-body-md text-on-surface opt-text">${opt}</p>
+    `;
+    div.onclick = () => selectOption(idx, div, q.correct);
+    optContainer.appendChild(div);
+  });
+  
+  // Update progress
+  const pct = Math.round((currentQuestion / questions.length) * 100);
+  document.getElementById('quiz-progress-bar').style.width = pct + '%';
+  document.getElementById('quiz-progress-text').textContent = pct + '% Completed';
+  document.getElementById('quiz-question-count').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+}
+
+function selectOption(idx, el, correct) {
+  if (answered) return;
+  answered = true;
+  selectedOption = idx;
+  
+  const options = document.querySelectorAll('#quiz-options .option-card');
+  options.forEach((opt, i) => {
+    const letter = opt.querySelector('.opt-letter');
+    const text = opt.querySelector('.opt-text');
+    if (i === correct) {
+      opt.style.borderColor = '#1e7e34';
+      opt.style.background = 'rgba(30,126,52,0.06)';
+      letter.style.borderColor = '#1e7e34';
+      letter.style.background = '#1e7e34';
+      letter.style.color = 'white';
+      text.style.color = '#1e7e34';
+    } else if (i === idx && idx !== correct) {
+      opt.style.borderColor = '#ba1a1a';
+      opt.style.background = 'rgba(186,26,26,0.05)';
+      letter.style.borderColor = '#ba1a1a';
+      letter.style.color = '#ba1a1a';
+    }
+    opt.onclick = null;
+  });
+  
+  if (idx === correct) {
+    quizScore += 100;
+    const scoreEl = document.getElementById('quiz-score');
+    if (scoreEl) scoreEl.textContent = quizScore;
+    showToast('Correct! +100 points');
+  } else {
+    showToast('Incorrect. The correct answer is highlighted.');
+  }
+  
+  const q = questions[currentQuestion];
+  document.getElementById('quiz-explanation-text').textContent = q.explanation;
+  document.getElementById('quiz-explanation').classList.remove('hidden');
+}
+
+function nextQuestion() {
+  if (currentQuestion < questions.length - 1) {
+    currentQuestion++;
+    renderQuestion();
+  } else {
+    clearInterval(timerInterval);
+    document.getElementById('quiz-score').textContent = quizScore;
+    document.getElementById('results-modal').classList.add('open');
+  }
+}
+
+function prevQuestion() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+  }
+}
+
+function markReview() {
+  markedReview = !markedReview;
+  const btn = document.getElementById('mark-review-btn');
+  if (markedReview) {
+    btn.classList.add('text-secondary-container');
+    btn.classList.remove('text-on-surface-variant');
+    showToast('Marked for review');
+  } else {
+    btn.classList.remove('text-secondary-container');
+    btn.classList.add('text-on-surface-variant');
+  }
+}
+
+function useHint() {
+  if (quizScore >= 50) {
+    quizScore -= 50;
+    const scoreEl = document.getElementById('quiz-score');
+    if (scoreEl) scoreEl.textContent = quizScore;
+    const q = questions[currentQuestion];
+    showToast('Hint: Focus on what EDA helps you understand before modeling.');
+  } else {
+    showToast('Not enough points for a hint!');
+  }
+}
+
+// ===== FEEDBACK =====
+function submitFeedback() {
+  const text = document.getElementById('feedback-text').value;
+  if (!quizRating) { showToast('Please select a rating first'); return; }
+  showToast('Feedback submitted! Thank you 🎉');
+  document.getElementById('feedback-text').value = '';
+}
+
+function submitPageFeedback() {
+  showToast('Feedback submitted! Thank you 🎉');
+  document.getElementById('page-feedback-text').value = '';
+}
+
+// ===== MODALS =====
+function openSettings() {
+  document.getElementById('settings-modal').classList.add('open');
+}
+function toggleNotif() {
+  document.getElementById('notif-modal').classList.add('open');
+  document.getElementById('notif-badge').style.display = 'none';
+}
+function openSupport() {
+  document.getElementById('support-modal').classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// Close modals clicking overlay
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.classList.remove('open');
+  });
+});
+
+// ===== TOGGLE SWITCH =====
+function toggleSwitch(id) {
+  const el = document.getElementById(id);
+  const dot = el.querySelector('div');
+  if (el.classList.contains('bg-primary-container')) {
+    el.classList.remove('bg-primary-container');
+    el.classList.add('bg-outline-variant');
+    dot.style.marginLeft = '0';
+    dot.style.marginRight = 'auto';
+  } else {
+    el.classList.add('bg-primary-container');
+    el.classList.remove('bg-outline-variant');
+    dot.style.marginLeft = 'auto';
+    dot.style.marginRight = '0';
+  }
+}
+
+// ===== FAQ TOGGLE =====
+function toggleFaq(idx) {
+  const items = document.querySelectorAll('#faq-list .faq-content');
+  const icons = document.querySelectorAll('#faq-list .faq-icon');
+  items.forEach((item, i) => {
+    if (i === idx) {
+      item.classList.toggle('hidden');
+      icons[i].textContent = item.classList.contains('hidden') ? 'expand_more' : 'expand_less';
+    } else {
+      item.classList.add('hidden');
+      icons[i].textContent = 'expand_more';
+    }
+  });
+}
+
+// ===== VIDEO PLAYER =====
+function playVideo(n) {
+  showToast('Video player launching...');
+}
+
+// ===== MODULE DETAIL =====
+function openModule(n) {
+  if (n <= 3) {
+    showToast(`Opening Module ${n}...`);
+    navigate('course-modules');
+  } else if (n === 4) {
+    navigate('dashboard');
+  } else {
+    showToast('Complete previous modules to unlock this one.');
+  }
+}
+
+// ===== SAVE PROGRESS =====
+function saveProgress() {
+  showToast('Progress saved successfully!');
+}
+
+// ===== LOGOUT =====
+function logout() {
+  if (confirm('Are you sure you want to log out?')) {
+    showToast('Logged out. See you soon!');
+  }
+}
+
+// ===== TOAST =====
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toast-message').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ===== INIT =====
+navigate('dashboard');
+</script>
+
+<!-- ======== MODAL: VIDEO PLAYER ======== -->
+<div id="video-player-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl max-w-3xl w-full mx-4 relative overflow-hidden">
+    <div class="flex justify-between items-center px-5 py-3 border-b border-outline-variant">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-secondary-container">videocam</span>
+        <span id="modal-video-title" class="text-label-md font-semibold text-on-surface">Video Player</span>
+      </div>
+      <button onclick="closeVideoPlayer()" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="bg-black relative" style="aspect-ratio:16/9">
+      <video id="modal-video-el" controls class="w-full h-full" style="max-height:450px">
+        <source id="modal-video-src" src="" type="video/mp4"/>
+        Browser tidak mendukung video tag.
+      </video>
+      <div id="modal-video-placeholder" class="absolute inset-0 flex flex-col items-center justify-center text-white">
+        <div class="w-20 h-20 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center mb-4">
+          <span class="material-symbols-outlined" style="font-size:40px">play_arrow</span>
+        </div>
+        <p class="text-body-md">Klik play untuk memulai video</p>
+      </div>
+    </div>
+    <div class="px-5 py-4">
+      <p id="modal-video-desc" class="text-body-sm text-on-surface-variant"></p>
+      <div class="flex gap-4 mt-3">
+        <span id="modal-video-module" class="text-label-sm text-primary bg-primary/10 px-3 py-1 rounded-full"></span>
+        <span id="modal-video-cat" class="text-label-sm text-secondary bg-secondary/10 px-3 py-1 rounded-full"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ======== MODAL: PPT VIEWER (uploaded) ======== -->
+<div id="ppt-viewer-modal" class="modal-overlay">
+  <div class="bg-surface-container-lowest rounded-xl shadow-2xl max-w-2xl w-full mx-4 relative">
+    <div class="flex justify-between items-center px-5 py-3 border-b border-outline-variant">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">slideshow</span>
+        <span id="modal-ppt-title" class="text-label-md font-semibold text-on-surface">Presentasi</span>
+      </div>
+      <button onclick="closeModal('ppt-viewer-modal')" class="p-2 rounded-full hover:bg-surface-container"><span class="material-symbols-outlined text-on-surface-variant">close</span></button>
+    </div>
+    <div class="bg-surface-dim flex items-center justify-center" style="height:340px">
+      <div class="text-center">
+        <span class="material-symbols-outlined text-primary mb-4 block" style="font-size:72px">article</span>
+        <p id="modal-ppt-file" class="text-label-md text-on-surface-variant mb-1"></p>
+        <p id="modal-ppt-slides" class="text-body-sm text-on-surface-variant"></p>
+      </div>
+    </div>
+    <div class="px-5 py-4 flex justify-between items-center border-t border-outline-variant">
+      <div>
+        <p id="modal-ppt-module" class="text-label-sm text-primary font-semibold"></p>
+        <p id="modal-ppt-desc" class="text-body-sm text-on-surface-variant mt-1"></p>
+      </div>
+      <button onclick="closeModal('ppt-viewer-modal')" class="flex items-center gap-2 bg-primary text-on-primary px-5 py-2 rounded-lg text-label-md hover:brightness-110 transition-all">
+        <span class="material-symbols-outlined text-sm">open_in_new</span> Buka Full
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== UPLOAD CONTENT FEATURE =====
+
+// State
+let pptFiles = [];
+let videoFiles = [];
+let pendingPPTFiles = [];
+let pendingVideoFiles = [];
+let currentActiveVideoSrc = '';
+
+// --- Sample seed data for library ---
+let pptLibrary = [
+  { id: 1, title: 'Data Visualization Basics', module: 'Module 4: Visualization', lecturer: 'Dr. Aris Thorne', date: '2024-05-01', desc: 'Pengenalan teknik visualisasi data menggunakan Matplotlib & Seaborn.', size: '4.2 MB', slides: 48, filename: 'data-viz-basics.pptx' },
+  { id: 2, title: 'Introduction to Python for Data Science', module: 'Module 1: Introduction', lecturer: 'Prof. James Okafor', date: '2024-04-20', desc: 'Dasar-dasar Python dan ekosistem library untuk data science.', size: '2.8 MB', slides: 32, filename: 'python-intro.pptx' },
+  { id: 3, title: 'Statistical Foundations', module: 'Module 3: Statistics', lecturer: 'Dr. Elena Rodriguez', date: '2024-04-28', desc: 'Probabilitas, distribusi, dan uji hipotesis untuk data science.', size: '5.1 MB', slides: 55, filename: 'stats-foundations.pptx' },
+];
+
+let videoLibrary = [
+  { id: 1, title: 'Real-world Applications of Big Data', module: 'Module 4: Visualization', presenter: 'Dr. Elena Rodriguez', category: 'Expert Insight', duration: '12:45', desc: 'Eksplorasi bagaimana perusahaan logistik global memanfaatkan predictive modeling.', featured: true, src: '' },
+  { id: 2, title: 'Data Ethics & Privacy in AI', module: 'Module 5: Machine Learning', presenter: 'Prof. James Okafor', category: 'Expert Insight', duration: '08:30', desc: 'Menavigasi lanskap etika dalam deployment machine learning.', featured: false, src: '' },
+  { id: 3, title: 'Building Data Pipelines at Scale', module: 'Module 2: Data Types', presenter: 'Mei Lin Zhang', category: 'Tutorial Praktis', duration: '15:20', desc: 'Engineering robust ETL workflows untuk enterprise environments.', featured: false, src: '' },
+];
+
+// --- Tab switching ---
+function switchUploadTab(tab) {
+  document.querySelectorAll('.upload-tab').forEach(t => {
+    t.classList.remove('text-primary', 'border-primary');
+    t.classList.add('text-on-surface-variant', 'border-transparent');
+  });
+  document.querySelectorAll('.upload-panel').forEach(p => p.classList.add('hidden'));
+
+  document.getElementById('tab-' + tab).classList.add('text-primary', 'border-primary');
+  document.getElementById('tab-' + tab).classList.remove('text-on-surface-variant', 'border-transparent');
+  document.getElementById('panel-' + tab).classList.remove('hidden');
+}
+
+// --- Drag & Drop ---
+function handleDragOver(event, zoneId) {
+  event.preventDefault();
+  const zone = document.getElementById(zoneId);
+  zone.style.borderColor = '#003d7c';
+  zone.style.background = 'rgba(0,61,124,0.05)';
+}
+function handleDragLeave(zoneId) {
+  const zone = document.getElementById(zoneId);
+  zone.style.borderColor = '';
+  zone.style.background = '';
+}
+function handleDrop(event, type) {
+  event.preventDefault();
+  const zoneId = type + '-dropzone';
+  handleDragLeave(zoneId);
+  const files = Array.from(event.dataTransfer.files);
+  if (type === 'ppt') processPPTFiles(files);
+  else processVideoFiles(files);
+}
+
+// ===== PPT UPLOAD =====
+function handlePPTUpload(event) {
+  const files = Array.from(event.target.files);
+  processPPTFiles(files);
+}
+
+function processPPTFiles(files) {
+  const valid = files.filter(f => /\.(ppt|pptx|pdf)$/i.test(f.name));
+  if (!valid.length) { showToast('Format tidak didukung. Gunakan .pptx, .ppt, atau .pdf'); return; }
+  pendingPPTFiles = [...valid];
+  renderPPTQueue(valid);
+  document.getElementById('ppt-queue').classList.remove('hidden');
+  document.getElementById('ppt-meta-form').classList.remove('hidden');
+  showToast(valid.length + ' file siap diupload');
+}
+
+function renderPPTQueue(files) {
+  const list = document.getElementById('ppt-queue-list');
+  const count = document.getElementById('ppt-queue-count');
+  count.textContent = files.length + ' file';
+  list.innerHTML = '';
+  files.forEach((f, idx) => {
+    const size = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : (f.size/1024).toFixed(0)+' KB';
+    const ext = f.name.split('.').pop().toUpperCase();
+    const div = document.createElement('div');
+    div.className = 'flex items-center gap-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-4';
+    div.innerHTML = `
+      <div class="w-11 h-11 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-primary">slideshow</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-body-sm font-semibold text-on-surface truncate">${f.name}</p>
+        <p class="text-label-sm text-on-surface-variant">${ext} • ${size}</p>
+      </div>
+      <div id="ppt-prog-${idx}" class="text-label-sm text-on-surface-variant">Menunggu...</div>
+      <button onclick="removePPTFile(${idx})" class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors">
+        <span class="material-symbols-outlined text-sm">close</span>
+      </button>`;
+    list.appendChild(div);
+  });
+}
+
+function removePPTFile(idx) {
+  pendingPPTFiles.splice(idx, 1);
+  if (!pendingPPTFiles.length) clearPPTUpload();
+  else renderPPTQueue(pendingPPTFiles);
+}
+
+function clearPPTUpload() {
+  pendingPPTFiles = [];
+  document.getElementById('ppt-queue').classList.add('hidden');
+  document.getElementById('ppt-meta-form').classList.add('hidden');
+  document.getElementById('ppt-file-input').value = '';
+  ['ppt-title','ppt-module','ppt-lecturer','ppt-date','ppt-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+}
+
+function submitPPTUpload() {
+  const title = document.getElementById('ppt-title').value.trim();
+  const module = document.getElementById('ppt-module').value;
+  if (!title) { showToast('Judul presentasi wajib diisi'); return; }
+  if (!module) { showToast('Pilih modul tujuan'); return; }
+  if (!pendingPPTFiles.length) { showToast('Pilih minimal satu file'); return; }
+
+  const lecturer = document.getElementById('ppt-lecturer').value.trim();
+  const date = document.getElementById('ppt-date').value;
+  const desc = document.getElementById('ppt-desc').value.trim();
+
+  // Simulate progress upload
+  pendingPPTFiles.forEach((f, idx) => {
+    const prog = document.getElementById('ppt-prog-' + idx);
+    if (prog) {
+      prog.innerHTML = `<div class="w-20 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-primary-container rounded-full" style="width:0%" id="pb-ppt-${idx}"></div></div>`;
+      let pct = 0;
+      const iv = setInterval(() => {
+        pct = Math.min(pct + Math.random() * 25, 100);
+        const bar = document.getElementById('pb-ppt-' + idx);
+        if (bar) bar.style.width = pct + '%';
+        if (pct >= 100) {
+          clearInterval(iv);
+          if (prog) prog.innerHTML = '<span class="material-symbols-outlined text-green-600 text-sm">check_circle</span>';
+        }
+      }, 200);
+    }
+
+    const newEntry = {
+      id: Date.now() + idx,
+      title: title + (pendingPPTFiles.length > 1 ? ' ' + (idx+1) : ''),
+      module, lecturer, date, desc,
+      size: f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : (f.size/1024).toFixed(0)+' KB',
+      slides: Math.floor(Math.random()*40) + 10,
+      filename: f.name
+    };
+    pptLibrary.unshift(newEntry);
+  });
+
+  setTimeout(() => {
+    renderPPTLibrary();
+    clearPPTUpload();
+    showToast('Presentasi berhasil diupload! 🎉');
+  }, 1800);
+}
+
+function renderPPTLibrary(filter = '') {
+  const lib = document.getElementById('ppt-library');
+  if (!lib) return;
+  const items = filter ? pptLibrary.filter(p => p.title.toLowerCase().includes(filter.toLowerCase()) || p.module.toLowerCase().includes(filter.toLowerCase())) : pptLibrary;
+  lib.innerHTML = items.length ? '' : '<p class="text-body-sm text-on-surface-variant col-span-3 py-8 text-center">Belum ada presentasi. Upload file pertama Anda!</p>';
+  items.forEach(p => {
+    const div = document.createElement('div');
+    div.className = 'bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm p-5 card-hover cursor-pointer';
+    div.innerHTML = `
+      <div class="flex items-start gap-3 mb-3">
+        <div class="w-11 h-11 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+          <span class="material-symbols-outlined text-primary">slideshow</span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <h4 class="text-label-md font-bold text-on-surface truncate">${p.title}</h4>
+          <p class="text-label-sm text-primary font-medium">${p.module}</p>
+        </div>
+      </div>
+      <p class="text-body-sm text-on-surface-variant mb-3 line-clamp-2">${p.desc || 'Tidak ada deskripsi.'}</p>
+      <div class="flex items-center justify-between text-label-sm text-on-surface-variant">
+        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-sm">layers</span>${p.slides} slide • ${p.size}</span>
+        <div class="flex gap-2">
+          <button onclick="openPPTViewer(${p.id})" class="p-1.5 rounded-lg hover:bg-surface-container transition-colors text-primary" title="Preview"><span class="material-symbols-outlined text-sm">visibility</span></button>
+          <button onclick="deletePPT(${p.id})" class="p-1.5 rounded-lg hover:bg-error-container transition-colors text-on-surface-variant hover:text-error" title="Hapus"><span class="material-symbols-outlined text-sm">delete</span></button>
+        </div>
+      </div>
+    `;
+    lib.appendChild(div);
+  });
+}
+
+function filterPPTLibrary(val) { renderPPTLibrary(val); }
+
+function openPPTViewer(id) {
+  const p = pptLibrary.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-ppt-title').textContent = p.title;
+  document.getElementById('modal-ppt-file').textContent = p.filename;
+  document.getElementById('modal-ppt-slides').textContent = p.slides + ' slide • ' + p.size;
+  document.getElementById('modal-ppt-module').textContent = p.module;
+  document.getElementById('modal-ppt-desc').textContent = p.desc || '';
+  document.getElementById('ppt-viewer-modal').classList.add('open');
+}
+
+function deletePPT(id) {
+  if (!confirm('Hapus presentasi ini?')) return;
+  pptLibrary = pptLibrary.filter(p => p.id !== id);
+  renderPPTLibrary();
+  showToast('Presentasi dihapus');
+}
+
+// ===== VIDEO UPLOAD =====
+function handleVideoUpload(event) {
+  const files = Array.from(event.target.files);
+  processVideoFiles(files);
+}
+
+function processVideoFiles(files) {
+  const valid = files.filter(f => f.type.startsWith('video/'));
+  if (!valid.length) { showToast('Format tidak didukung. Gunakan file video.'); return; }
+  pendingVideoFiles = [...valid];
+  renderVideoQueue(valid);
+  document.getElementById('video-queue').classList.remove('hidden');
+  document.getElementById('video-meta-form').classList.remove('hidden');
+  showToast(valid.length + ' video siap diupload');
+}
+
+function addVideoURL() {
+  const url = document.getElementById('video-url-input').value.trim();
+  if (!url || !url.startsWith('http')) { showToast('Masukkan URL yang valid'); return; }
+  const fakeFile = { name: url, type: 'video/url', size: 0, _url: url };
+  pendingVideoFiles.push(fakeFile);
+  renderVideoQueue(pendingVideoFiles);
+  document.getElementById('video-queue').classList.remove('hidden');
+  document.getElementById('video-meta-form').classList.remove('hidden');
+  document.getElementById('video-url-input').value = '';
+  showToast('URL video ditambahkan!');
+}
+
+function renderVideoQueue(files) {
+  const list = document.getElementById('video-queue-list');
+  const count = document.getElementById('video-queue-count');
+  count.textContent = files.length + ' file';
+  list.innerHTML = '';
+  files.forEach((f, idx) => {
+    const size = f.size > 1048576 ? (f.size/1048576).toFixed(1)+' MB' : f.size > 0 ? (f.size/1024).toFixed(0)+' KB' : 'URL';
+    const name = f._url ? f._url.substring(0, 60) + (f._url.length > 60 ? '...' : '') : f.name;
+    const div = document.createElement('div');
+    div.className = 'flex items-center gap-3 bg-surface-container-lowest border border-outline-variant rounded-xl p-4';
+    div.innerHTML = `
+      <div class="w-11 h-11 bg-secondary/10 rounded-lg flex items-center justify-center shrink-0">
+        <span class="material-symbols-outlined text-secondary-container">${f._url ? 'link' : 'video_file'}</span>
+      </div>
+      <div class="flex-1 min-w-0">
+        <p class="text-body-sm font-semibold text-on-surface truncate">${name}</p>
+        <p class="text-label-sm text-on-surface-variant">${f._url ? 'URL Eksternal' : 'VIDEO'} • ${size}</p>
+      </div>
+      <div id="vid-prog-${idx}" class="text-label-sm text-on-surface-variant">Menunggu...</div>
+      <button onclick="removeVideoFile(${idx})" class="p-1 rounded hover:bg-surface-container text-on-surface-variant hover:text-error transition-colors">
+        <span class="material-symbols-outlined text-sm">close</span>
+      </button>`;
+    list.appendChild(div);
+  });
+}
+
+function removeVideoFile(idx) {
+  pendingVideoFiles.splice(idx, 1);
+  if (!pendingVideoFiles.length) clearVideoUpload();
+  else renderVideoQueue(pendingVideoFiles);
+}
+
+function clearVideoUpload() {
+  pendingVideoFiles = [];
+  document.getElementById('video-queue').classList.add('hidden');
+  document.getElementById('video-meta-form').classList.add('hidden');
+  document.getElementById('video-file-input').value = '';
+  ['video-title','video-module','video-presenter','video-category','video-desc'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = el.tagName === 'SELECT' ? el.options[0].value : '';
+  });
+}
+
+function submitVideoUpload() {
+  const title = document.getElementById('video-title').value.trim();
+  const module = document.getElementById('video-module').value;
+  if (!title) { showToast('Judul video wajib diisi'); return; }
+  if (!module) { showToast('Pilih modul tujuan'); return; }
+  if (!pendingVideoFiles.length) { showToast('Pilih minimal satu file video'); return; }
+
+  const presenter = document.getElementById('video-presenter').value.trim();
+  const category = document.getElementById('video-category').value;
+  const desc = document.getElementById('video-desc').value.trim();
+  const featured = document.getElementById('video-featured').checked;
+
+  pendingVideoFiles.forEach((f, idx) => {
+    const prog = document.getElementById('vid-prog-' + idx);
+    if (prog) {
+      prog.innerHTML = `<div class="w-20 h-1.5 bg-surface-container-high rounded-full overflow-hidden"><div class="h-full bg-secondary-container rounded-full" style="width:0%" id="pb-vid-${idx}"></div></div>`;
+      let pct = 0;
+      const iv = setInterval(() => {
+        pct = Math.min(pct + Math.random() * 15, 100);
+        const bar = document.getElementById('pb-vid-' + idx);
+        if (bar) bar.style.width = pct + '%';
+        if (pct >= 100) {
+          clearInterval(iv);
+          if (prog) prog.innerHTML = '<span class="material-symbols-outlined text-green-600 text-sm">check_circle</span>';
+        }
+      }, 300);
+    }
+
+    let src = '';
+    if (f._url) { src = f._url; }
+    else if (f instanceof File) { src = URL.createObjectURL(f); }
+
+    const mins = Math.floor(Math.random()*20+5);
+    const secs = Math.floor(Math.random()*60);
+    const newEntry = {
+      id: Date.now() + idx,
+      title: title + (pendingVideoFiles.length > 1 ? ' ' + (idx+1) : ''),
+      module, presenter, category, desc, featured, src,
+      duration: mins + ':' + String(secs).padStart(2,'0')
+    };
+    videoLibrary.unshift(newEntry);
+  });
+
+  setTimeout(() => {
+    renderVideoLibrary();
+    clearVideoUpload();
+    showToast('Video berhasil diupload! 🎉');
+  }, 2500);
+}
+
+function renderVideoLibrary(filterCat = '') {
+  const lib = document.getElementById('video-library');
+  if (!lib) return;
+  const items = filterCat ? videoLibrary.filter(v => v.category === filterCat) : videoLibrary;
+  lib.innerHTML = items.length ? '' : '<p class="text-body-sm text-on-surface-variant col-span-2 py-8 text-center">Belum ada video. Upload video pertama Anda!</p>';
+  items.forEach(v => {
+    const div = document.createElement('div');
+    div.className = 'bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden card-hover cursor-pointer';
+    div.innerHTML = `
+      <div class="bg-inverse-surface relative h-40 flex items-center justify-center" onclick="openVideoPlayer(${v.id})">
+        <svg width="100%" height="160" viewBox="0 0 400 160" class="absolute inset-0">
+          <defs><linearGradient id="vbg${v.id}" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#213145"/><stop offset="100%" style="stop-color:#1a3f6a"/></linearGradient></defs>
+          <rect width="400" height="160" fill="url(#vbg${v.id})"/>
+        </svg>
+        <div class="relative z-10 w-14 h-14 rounded-full bg-white/15 border-2 border-white/40 flex items-center justify-center hover:bg-white/25 transition-colors">
+          <span class="material-symbols-outlined text-white" style="font-size:28px">play_arrow</span>
+        </div>
+        <div class="absolute bottom-2 left-3 bg-black/70 text-white text-label-sm px-2 py-0.5 rounded">${v.duration}</div>
+        ${v.featured ? '<div class="absolute top-2 right-2 bg-secondary-container text-on-secondary-container text-label-sm px-2 py-0.5 rounded-full font-semibold">Featured</div>' : ''}
+      </div>
+      <div class="p-4">
+        <div class="flex items-start justify-between gap-2 mb-1">
+          <h4 class="text-label-md font-bold text-on-surface leading-snug flex-1">${v.title}</h4>
+          <button onclick="event.stopPropagation();deleteVideo(${v.id})" class="p-1 rounded hover:bg-error-container text-on-surface-variant hover:text-error transition-colors" title="Hapus"><span class="material-symbols-outlined text-sm">delete</span></button>
+        </div>
+        <span class="text-label-sm text-secondary font-semibold">${v.category}</span>
+        <p class="text-body-sm text-on-surface-variant mt-1 mb-2 line-clamp-2">${v.desc || 'Tidak ada deskripsi.'}</p>
+        <div class="flex items-center gap-2">
+          <div class="w-6 h-6 rounded-full bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary" style="font-size:14px">person</span></div>
+          <span class="text-label-sm text-on-surface">${v.presenter || 'Tidak diketahui'}</span>
+        </div>
+        <p class="text-label-sm text-primary font-medium mt-1">${v.module}</p>
+      </div>`;
+    lib.appendChild(div);
+  });
+}
+
+function filterVideoLibrary(cat) { renderVideoLibrary(cat); }
+
+function openVideoPlayer(id) {
+  const v = videoLibrary.find(x => x.id === id);
+  if (!v) return;
+  document.getElementById('modal-video-title').textContent = v.title;
+  document.getElementById('modal-video-desc').textContent = v.desc || '';
+  document.getElementById('modal-video-module').textContent = v.module;
+  document.getElementById('modal-video-cat').textContent = v.category;
+
+  const videoEl = document.getElementById('modal-video-el');
+  const srcEl = document.getElementById('modal-video-src');
+  const placeholder = document.getElementById('modal-video-placeholder');
+
+  if (v.src && v.src.startsWith('blob:')) {
+    srcEl.src = v.src;
+    srcEl.type = 'video/mp4';
+    videoEl.style.display = 'block';
+    placeholder.style.display = 'none';
+    videoEl.load();
+  } else if (v.src && v.src.startsWith('http')) {
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<span class="material-symbols-outlined text-white mb-3" style="font-size:48px">link</span><p class="text-white text-body-md mb-3">Video dari URL Eksternal</p><a href="${v.src}" target="_blank" class="bg-primary text-on-primary px-5 py-2 rounded-lg text-label-md hover:brightness-110">Buka di Tab Baru</a>`;
+    videoEl.style.display = 'none';
+  } else {
+    placeholder.style.display = 'flex';
+    placeholder.innerHTML = `<span class="material-symbols-outlined text-white mb-3" style="font-size:48px">videocam</span><p class="text-white text-body-md">Video demo — tidak ada file nyata</p>`;
+    videoEl.style.display = 'none';
+  }
+
+  document.getElementById('video-player-modal').classList.add('open');
+}
+
+function closeVideoPlayer() {
+  const videoEl = document.getElementById('modal-video-el');
+  videoEl.pause();
+  videoEl.src = '';
+  document.getElementById('modal-video-el').load();
+  closeModal('video-player-modal');
+}
+
+function deleteVideo(id) {
+  if (!confirm('Hapus video ini?')) return;
+  videoLibrary = videoLibrary.filter(v => v.id !== id);
+  renderVideoLibrary();
+  showToast('Video dihapus');
+}
+
+// Initialize libraries on load
+document.addEventListener('DOMContentLoaded', () => {
+  renderPPTLibrary();
+  renderVideoLibrary();
+});
+</script>
+
+</body>
+</html>
